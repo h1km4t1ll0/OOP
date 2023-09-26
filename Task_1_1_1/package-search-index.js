@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"ru.nsu.dolgov.HeapSort"},{"l":"ru.nsu.dolgov.Main"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"ru.nsu.dolgov.heapsort"},{"l":"ru.nsu.dolgov.main"}]
