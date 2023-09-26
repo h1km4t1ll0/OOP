@@ -9,6 +9,7 @@
 #cd ..
 #cd ./src/main/java/ru/nsu/dolgov/main
 javac ./src/main/java/ru/nsu/dolgov/main/Main.java
+#jar --create --file heapSort.jar  src.main.java.ru.nsu.dolgov.heapsort.HeapSort.class  src.main.java.ru.nsu.dolgov.main.Main
 #gradle javadoc
 #java main.Main
 #jar cf heapSort.jar ./main/Main.class

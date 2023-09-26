@@ -1,12 +1,24 @@
 package ru.nsu.dolgov.heapsort;
 
+/**
+ * Class for heap sort.
+ */
 public class HeapSort {
     private final int[] array;
 
+    /**
+     *
+     * @param array
+     */
     public HeapSort(int[] array) {
         this.array = array;
     }
 
+    /**
+     *
+     * @param lastIndexInArray
+     * @param index
+     */
     void heapify(int lastIndexInArray, int index) {
         int largestElementIndex = index; // Инициализируем наибольший элемент как корень
         int leftElementIndex = 2 * index + 1;
@@ -33,6 +45,10 @@ public class HeapSort {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public int[] sort() {
         int lastIndexInArray = this.array.length;
 
