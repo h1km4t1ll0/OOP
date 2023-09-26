@@ -1,4 +1,4 @@
-package ru.nsu.dolgov.heapsort;
+package ru.nsu.dolgov;
 
 import java.util.Arrays;
 import java.util.Random;
