@@ -2,22 +2,27 @@ package ru.nsu.dolgov.heapsort;
 
 /**
  * Class for heap sort.
+ *
+ * @author Долгов Даниил
+ * @version 1.0
  */
 public class HeapSort {
     private final int[] array;
 
     /**
+     * Constructor of HeapSort class.
      *
-     * @param array
+     * @param array массив интов на вход
      */
     public HeapSort(int[] array) {
         this.array = array;
     }
 
     /**
+     * A helper for sort function.
      *
-     * @param lastIndexInArray
-     * @param index
+     * @param lastIndexInArray последний индекс в массиве
+     * @param index индекс наибольшего элемента
      */
     void heapify(int lastIndexInArray, int index) {
         int largestElementIndex = index; // Инициализируем наибольший элемент как корень
@@ -46,8 +51,8 @@ public class HeapSort {
     }
 
     /**
-     *
-     * @return
+     * Main function in HeapSort class.
+     * @return возвращает вывод ф-ии heapify
      */
     public int[] sort() {
         int lastIndexInArray = this.array.length;
