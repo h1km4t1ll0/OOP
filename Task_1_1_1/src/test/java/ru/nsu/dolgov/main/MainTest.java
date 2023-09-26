@@ -1,4 +1,4 @@
-package ru.nsu.dolgov.Main;
+package ru.nsu.dolgov.main;
 
 import org.junit.jupiter.api.Test;
 

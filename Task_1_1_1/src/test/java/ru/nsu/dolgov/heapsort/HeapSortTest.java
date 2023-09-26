@@ -1,4 +1,4 @@
-package ru.nsu.dolgov.HeapSort;
+package ru.nsu.dolgov.heapsort;
 
 import org.junit.jupiter.api.Test;
 

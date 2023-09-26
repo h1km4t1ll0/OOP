@@ -1,4 +1,4 @@
-package ru.nsu.dolgov.HeapSort;
+package ru.nsu.dolgov.heapsort;
 
 public class HeapSort {
     private final int[] array;
