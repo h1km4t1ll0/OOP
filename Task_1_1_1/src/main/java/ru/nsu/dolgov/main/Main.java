@@ -1,7 +1,7 @@
 package ru.nsu.dolgov.main;
 
-import ru.nsu.dolgov.heapsort.HeapSort;
 import java.util.Arrays;
+import ru.nsu.dolgov.heapsort.HeapSort;
 
 /**
  * Entrypoint for heap sort.
@@ -9,6 +9,7 @@ import java.util.Arrays;
 public class Main {
     /**
      * An entrypoint to the heap sort.
+     *
      * @param args массив аргументов на вход
      */
     public static void main(String[] args) {

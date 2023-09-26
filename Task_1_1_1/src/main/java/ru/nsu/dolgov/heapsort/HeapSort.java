@@ -52,6 +52,7 @@ public class HeapSort {
 
     /**
      * Main function in HeapSort class.
+     *
      * @return возвращает вывод ф-ии heapify
      */
     public int[] sort() {
