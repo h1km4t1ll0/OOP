@@ -1,7 +1,6 @@
 package ru.nsu.dolgov.main;
 
 import ru.nsu.dolgov.heapsort.HeapSort;
-
 import java.util.Arrays;
 
 public class Main {
