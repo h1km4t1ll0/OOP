@@ -1,12 +1,10 @@
 package ru.nsu.dolgov.heapsort;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
-
 import java.util.Random;
-
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
+import org.junit.jupiter.api.Test;
 
 class HeapSortTest {
     @Test
@@ -17,7 +15,9 @@ class HeapSortTest {
 
     @Test
     void testNegativeArray() {
-        final HeapSort sampleInstance = new HeapSort(new int[]{1, 1, 1, 6, 7, 3, 2, 9, 8, -10, -90, -89, -2324});
+        final HeapSort sampleInstance = new HeapSort(
+                new int[]{1, 1, 1, 6, 7, 3, 2, 9, 8, -10, -90, -89, -2324}
+        );
         assertArrayEquals(new int[]{-2324, -90, -89, -10, 1, 1, 1, 2, 3, 6, 7, 8, 9}, sampleInstance.sort());
     }
 
