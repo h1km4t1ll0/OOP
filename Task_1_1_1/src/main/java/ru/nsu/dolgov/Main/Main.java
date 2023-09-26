@@ -1,6 +1,6 @@
-package ru.nsu.dolgov.main;
+package ru.nsu.dolgov.Main;
 
-import ru.nsu.dolgov.heapSort.HeapSort;
+import ru.nsu.dolgov.HeapSort.HeapSort;
 
 import java.util.Arrays;
 

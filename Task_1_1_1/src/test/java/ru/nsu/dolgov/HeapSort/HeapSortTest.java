@@ -1,8 +1,10 @@
-package ru.nsu.dolgov.heapSort;
+package ru.nsu.dolgov.HeapSort;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.Arrays;
+
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,7 +32,7 @@ class HeapSortTest {
         int[] array = new int[100];
         int[] arrayCopy = new int[100];
 
-        for (int i = 0; i < array.length; i ++) {
+        for (int i = 0; i < array.length; i++) {
             array[i] = 0;
             arrayCopy[i] = 0;
         }

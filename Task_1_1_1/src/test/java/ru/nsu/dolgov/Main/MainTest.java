@@ -1,12 +1,12 @@
-package ru.nsu.dolgov.main;
+package ru.nsu.dolgov.Main;
 
 import org.junit.jupiter.api.Test;
 
 public class MainTest {
     @Test
     void testMainClass() {
-        String[] testArguments = new String[] {"tetsArg"};
+        String[] testArguments = new String[]{"tetsArg"};
         Main.main(testArguments);
-        assert(true);
+        assert (true);
     }
 }
