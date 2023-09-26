@@ -71,4 +71,11 @@ class HeapSortTest {
                 1, 1, 1, 2, 3, 6, 7, 8, 9
         }, sampleInstance.sort());
     }
+
+    @Test
+    void checkEntrypoint() {
+        String[] testArguments = new String[]{"tetsArg"};
+        HeapSort.main(testArguments);
+        assert(true);
+    }
 }
