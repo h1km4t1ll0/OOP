@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ru.nsu.dolgov.heapSort"},{"l":"ru.nsu.dolgov.main"}];updateSearchResults();

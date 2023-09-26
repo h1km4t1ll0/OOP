@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.nsu.dolgov.heapSort.HeapSortTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2023-09-26T05:01:00" hostname="macbookProH.local" time="0.28">
+  <properties/>
+  <testcase name="testArrayOfZeros()" classname="ru.nsu.dolgov.heapSort.HeapSortTest" time="0.012"/>
+  <testcase name="testRepeatedNumbers()" classname="ru.nsu.dolgov.heapSort.HeapSortTest" time="0.001"/>
+  <testcase name="testPositiveArray()" classname="ru.nsu.dolgov.heapSort.HeapSortTest" time="0.001"/>
+  <testcase name="testZeroArray()" classname="ru.nsu.dolgov.heapSort.HeapSortTest" time="0.0"/>
+  <testcase name="testNegativeArray()" classname="ru.nsu.dolgov.heapSort.HeapSortTest" time="0.0"/>
+  <testcase name="testBigArray()" classname="ru.nsu.dolgov.heapSort.HeapSortTest" time="0.265"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
