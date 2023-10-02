@@ -1,9 +1,11 @@
 package ru.nsu.dolgov;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Arrays;
 import java.util.Random;
+import org.junit.jupiter.api.Test;
 
 class HeapSortTest {
     @Test
@@ -76,6 +78,6 @@ class HeapSortTest {
     void checkEntrypoint() {
         String[] testArguments = new String[]{"tetsArg"};
         HeapSort.main(testArguments);
-        assert(true);
+        assertTrue(true);
     }
 }
