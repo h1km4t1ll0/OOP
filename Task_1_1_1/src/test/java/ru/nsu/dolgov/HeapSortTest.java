@@ -62,7 +62,7 @@ class HeapSortTest {
     void testRepeatedNumbers() {
         assertArrayEquals(new int[]{
             1, 1, 1, 2, 3, 6, 7, 8, 9
-        }, HeapSort.sort( new int[]{1, 1, 1, 6, 7, 3, 2, 9, 8}));
+        }, HeapSort.sort(new int[]{1, 1, 1, 6, 7, 3, 2, 9, 8}));
     }
 
     @Test
