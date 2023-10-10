@@ -1,4 +1,4 @@
-package ru.nsu.dolgov;
+package ru.nsu.dolgov.heapsort;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
