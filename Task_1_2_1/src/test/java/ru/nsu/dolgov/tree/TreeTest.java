@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
-import java.util.Objects;
-
 import org.junit.jupiter.api.Test;
 
 
@@ -88,7 +86,7 @@ public class TreeTest {
     }
 
     @Test
-    void checkBFS() {
+    void checkBfs() {
         Tree<String> tree = new Tree<>("root", null);
         Tree<String> child1 = tree.addChild("child1");
         tree.addChild("child1");
@@ -108,7 +106,7 @@ public class TreeTest {
     }
 
     @Test
-    void checkDFS() {
+    void checkDfs() {
         Tree<String> tree = new Tree<>("root", "DFS");
         Tree<String> child1 = tree.addChild("child1");
         tree.addChild("child10");
@@ -128,7 +126,7 @@ public class TreeTest {
     }
 
     @Test
-    public void checkDFSThrowsConcurrentModificationException() {
+    public void checkDfsThrowsConcurrentModificationException() {
         Tree<String> tree = new Tree<>("root");
         Tree<String> child = tree.addChild("child1");
         child.addChild("child5");
@@ -138,7 +136,7 @@ public class TreeTest {
     }
 
     @Test
-    public void checkBFSThrowsConcurrentModificationException() {
+    public void checkBfsThrowsConcurrentModificationException() {
         Tree<String> tree = new Tree<>("root", "DFS");
         Tree<String> child = tree.addChild("child1");
         child.addChild("child5");
