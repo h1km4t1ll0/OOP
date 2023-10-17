@@ -25,6 +25,7 @@ jacocoTestReport {
     }
 }
 
-tasks.withType(JavaCompile) {
-    options.release = 17
+java {
+    sourceCompatibility = "18"
+    targetCompatibility = "18"
 }
