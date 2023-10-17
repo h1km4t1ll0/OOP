@@ -113,9 +113,11 @@ public class Tree<T> implements Iterable<T> {
             return true;
         }
 
-        if (!(o instanceof Tree<?> otherTree)) {
+        if (!(o instanceof Tree)) {
             return false;
         }
+
+        Tree<?> otherTree = (Tree<?>) o;
 
         if (this.parentNode == null && otherTree.parentNode != null) {
             return false;
