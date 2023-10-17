@@ -25,4 +25,8 @@ jacocoTestReport {
     }
 }
 
-targetCompatibility = "17"
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(18))
+    }
+}
