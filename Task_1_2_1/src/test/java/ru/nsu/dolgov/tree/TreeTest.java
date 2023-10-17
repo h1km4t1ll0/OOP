@@ -158,7 +158,7 @@ public class TreeTest {
     @Test
     void checkDfs() {
         Tree<String> tree = new Tree<>("root");
-        tree.setIterator(Tree.iteratorTypes.Dfs);
+        tree.setIterator(Tree.IteratorTypes.Dfs);
         Tree<String> child1 = tree.addChild("child1");
         tree.addChild("child10");
         child1.addChild("child2");
@@ -189,7 +189,7 @@ public class TreeTest {
     @Test
     public void checkBfsThrowsConcurrentModificationException() {
         Tree<String> tree = new Tree<>("root");
-        tree.setIterator(Tree.iteratorTypes.Dfs);
+        tree.setIterator(Tree.IteratorTypes.Dfs);
         Tree<String> child = tree.addChild("child1");
         child.addChild("child5");
         Iterator<String> iterator = tree.iterator();

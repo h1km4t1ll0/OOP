@@ -20,11 +20,15 @@ public class Tree<T> implements Iterable<T> {
     private final List<Tree<T>> childNodes;
     public Tree<T> parentNode;
     private int modificationsCounter = 0;
-    public enum iteratorTypes {
+
+    /**
+     * Enum for an iterator type.
+     */
+    public enum IteratorTypes {
         Bfs,
         Dfs
     }
-    public iteratorTypes iteratorType = iteratorTypes.Bfs;
+    public IteratorTypes iteratorType = IteratorTypes.Bfs;
 
     /**
      * A constructor for class Tree.
@@ -37,7 +41,7 @@ public class Tree<T> implements Iterable<T> {
         this.parentNode = null;
     }
 
-    public void setIterator(iteratorTypes newIteratorType) {
+    public void setIterator(IteratorTypes newIteratorType) {
         iteratorType = newIteratorType;
     }
 
@@ -137,7 +141,7 @@ public class Tree<T> implements Iterable<T> {
      */
     @Override
     public Iterator<T> iterator() {
-        if (this.iteratorType == iteratorTypes.Bfs) {
+        if (this.iteratorType == IteratorTypes.Bfs) {
             return new BreadthIterator();
         } else {
             return new DepthIterator();
