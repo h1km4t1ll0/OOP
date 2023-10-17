@@ -24,3 +24,7 @@ jacocoTestReport {
         xml.required = true
     }
 }
+
+tasks.withType(JavaCompile) {
+    options.release = 17
+}
