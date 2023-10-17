@@ -62,6 +62,23 @@ public class TreeTest {
     }
 
     @Test
+    void checkEqualTreesButDifferentStructure() {
+        Tree<String> tree1 = new Tree<>("a");
+        tree1.addChild("b");
+        var child2 = tree1.addChild("c");
+        child2.addChild("e");
+        child2.addChild("d");
+
+
+        Tree<String> tree2 = new Tree<>("a");
+        var child21 = tree1.addChild("b");
+        tree2.addChild("c");
+        child21.addChild("e");
+        child21.addChild("d");
+        assertNotEquals(tree1, tree2);
+    }
+
+    @Test
     void checkNotEqualTreesEqualityCornerCaseOne() {
         Tree<String> tree1 = new Tree<>("root");
         tree1.addChild("child");
