@@ -28,6 +28,7 @@ public class Tree<T> implements Iterable<T> {
         Bfs,
         Dfs
     }
+
     public IteratorTypes iteratorType = IteratorTypes.Bfs;
 
     /**
