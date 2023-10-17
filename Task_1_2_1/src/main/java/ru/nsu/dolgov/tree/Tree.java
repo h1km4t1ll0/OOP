@@ -2,11 +2,12 @@ package ru.nsu.dolgov.tree;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.Queue;
 
 /**
  * Class for tree implementation.
@@ -18,40 +19,26 @@ public class Tree<T> implements Iterable<T> {
     public final T value;
     private final List<Tree<T>> childNodes;
     public Tree<T> parentNode;
-    private int modificationsFlag;
-    private final String iterator;
+    private int modificationsCounter = 0;
+    public enum iteratorTypes {
+        Bfs,
+        Dfs
+    }
+    public iteratorTypes iteratorType = iteratorTypes.Bfs;
 
     /**
      * A constructor for class Tree.
      *
      * @param value - value of the root node.
-     * @param typeOfIterator - type of iterator for the tree.
-     */
-    public Tree(T value, String typeOfIterator) {
-        if (typeOfIterator == null) {
-            this.iterator = "BFS";
-        } else {
-            this.iterator = "DFS";
-        }
-
-        this.value = value;
-        this.childNodes = new ArrayList<>();
-        this.parentNode = null;
-        this.modificationsFlag = 0;
-    }
-
-    /**
-     * A constructor for class Tree without specifying typeOfIterator.
-     *
-     * @param value - value of the root node.
      */
     public Tree(T value) {
-        this.iterator = "BFS";
-
         this.value = value;
         this.childNodes = new ArrayList<>();
         this.parentNode = null;
-        this.modificationsFlag = 0;
+    }
+
+    public void setIterator(iteratorTypes newIteratorType) {
+        iteratorType = newIteratorType;
     }
 
     /**
@@ -62,7 +49,7 @@ public class Tree<T> implements Iterable<T> {
     public void addChild(Tree<T> node) {
         node.parentNode = this;
         this.childNodes.add(node);
-        this.modificationsFlag++;
+        this.modificationsCounter++;
     }
 
     /**
@@ -72,10 +59,11 @@ public class Tree<T> implements Iterable<T> {
      * @return - new node of the tree.
      */
     public Tree<T> addChild(T value) {
-        Tree<T> child = new Tree<>(value, this.iterator);
+        Tree<T> child = new Tree<>(value);
+        child.setIterator(this.iteratorType);
         child.parentNode = this;
         this.childNodes.add(child);
-        this.modificationsFlag++;
+        this.modificationsCounter++;
 
         return child;
     }
@@ -86,9 +74,9 @@ public class Tree<T> implements Iterable<T> {
      * @param node - node to remove from the tree.
      */
     public void removeChild(Tree<T> node) {
-        if (this.childNodes.remove(node)) {
+        if (childNodes.remove(node)) {
             node.parentNode = null;
-            this.modificationsFlag++;
+            modificationsCounter++;
         }
     }
 
@@ -125,11 +113,9 @@ public class Tree<T> implements Iterable<T> {
             return true;
         }
 
-        if (!(o instanceof Tree)) {
+        if (!(o instanceof Tree<?> otherTree)) {
             return false;
         }
-
-        Tree<?> otherTree = (Tree<?>) o;
 
         if (this.parentNode == null && otherTree.parentNode != null) {
             return false;
@@ -149,10 +135,10 @@ public class Tree<T> implements Iterable<T> {
      */
     @Override
     public Iterator<T> iterator() {
-        if (this.iterator.equals("BFS")) {
-            return new BreadthIterator(this);
+        if (this.iteratorType == iteratorTypes.Bfs) {
+            return new BreadthIterator();
         } else {
-            return new DepthIterator(this);
+            return new DepthIterator();
         }
     }
 
@@ -162,15 +148,14 @@ public class Tree<T> implements Iterable<T> {
     private class DepthIterator implements Iterator<T> {
         private final List<Tree<T>> listNodes = new ArrayList<>();
         private int currentPositionInListNodes = 0;
-        private final int expectedModificationFlag = modificationsFlag;
+        private final int expectedModificationCount = modificationsCounter;
 
         /**
          * DepthIterator constructor.
          *
-         * @param tree - tree, to iterate through.
          */
-        DepthIterator(Tree<T> tree) {
-            listNodes.add(tree);
+        DepthIterator() {
+            listNodes.add(Tree.this);
         }
 
         /**
@@ -190,12 +175,12 @@ public class Tree<T> implements Iterable<T> {
          */
         @Override
         public T next() {
-            if (modificationsFlag != this.expectedModificationFlag) {
+            if (modificationsCounter != this.expectedModificationCount) {
                 throw new ConcurrentModificationException();
             }
 
             if (!hasNext()) {
-                throw new java.util.NoSuchElementException();
+                throw new NoSuchElementException();
             }
 
             Tree<T> currentNode = this.listNodes.get(this.currentPositionInListNodes);
@@ -208,16 +193,14 @@ public class Tree<T> implements Iterable<T> {
     }
 
     private class BreadthIterator implements Iterator<T> {
-        private final Queue<Tree<T>> queue = new LinkedList<>();
-        private final int expectedModificationsFlag = modificationsFlag;
+        private final Deque<Tree<T>> queue = new LinkedList<>();
+        private final int expectedModificationsFlag = modificationsCounter;
 
         /**
          * BreadthIterator constructor.
-         *
-         * @param tree - tree, to iterate through.
          */
-        BreadthIterator(Tree<T> tree) {
-            this.queue.offer(tree);
+        BreadthIterator() {
+            this.queue.offer(Tree.this);
         }
 
         /**
@@ -236,13 +219,13 @@ public class Tree<T> implements Iterable<T> {
          * @return - value of the next node.
          */
         @Override
-        public T next() throws java.util.NoSuchElementException {
-            if (modificationsFlag != this.expectedModificationsFlag) {
+        public T next() throws NoSuchElementException {
+            if (modificationsCounter != this.expectedModificationsFlag) {
                 throw new ConcurrentModificationException();
             }
 
             if (!hasNext()) {
-                throw new java.util.NoSuchElementException();
+                throw new NoSuchElementException();
             }
 
             Tree<T> currentNode = this.queue.poll();
@@ -254,9 +237,8 @@ public class Tree<T> implements Iterable<T> {
                 return currentNode.value;
             }
 
-            throw new java.util.NoSuchElementException();
+            throw new NoSuchElementException();
         }
-
     }
 }
 

@@ -62,6 +62,39 @@ public class TreeTest {
     }
 
     @Test
+    void checkNotEqualTreesEqualityCornerCaseOne() {
+        Tree<String> tree1 = new Tree<>("root");
+        tree1.addChild("child");
+        Tree<String> tree2 = new Tree<>("root");
+        Tree<String> childTree2 = tree2.addChild("child");
+        childTree2.addChild("child2");
+        assertNotEquals(tree1, tree2);
+    }
+
+    @Test
+    void checkNotEqualTreesEqualityCornerCaseTwo() {
+        Tree<String> tree1 = new Tree<>("root");
+        Tree<String> tree2 = new Tree<>("root");
+        tree2.addChild("child");
+        assertNotEquals(tree1, tree2);
+    }
+
+    @Test
+    void checkGenericArgInteger() {
+        Tree<Integer> tree1 = new Tree<>(1);
+        Tree<Integer> tree2 = new Tree<>(2);
+        tree2.addChild(49);
+        assertNotEquals(tree1, tree2);
+    }
+
+    @Test
+    void checkGenericArg() {
+        Tree<Tree<Integer>> tree1 = new Tree<>(new Tree<>(5));
+        Tree<Tree<Integer>> tree2 = new Tree<>(new Tree<>(5));
+        assertEquals(tree1, tree2);
+    }
+
+    @Test
     void checkRemoveChildNode() {
         Tree<String> tree1 = new Tree<>("root");
         Tree<String> childNode = tree1.addChild("child");
@@ -87,7 +120,7 @@ public class TreeTest {
 
     @Test
     void checkBfs() {
-        Tree<String> tree = new Tree<>("root", null);
+        Tree<String> tree = new Tree<>("root");
         Tree<String> child1 = tree.addChild("child1");
         tree.addChild("child1");
         tree.addChild("child18");
@@ -107,7 +140,8 @@ public class TreeTest {
 
     @Test
     void checkDfs() {
-        Tree<String> tree = new Tree<>("root", "DFS");
+        Tree<String> tree = new Tree<>("root");
+        tree.setIterator(Tree.iteratorTypes.Dfs);
         Tree<String> child1 = tree.addChild("child1");
         tree.addChild("child10");
         child1.addChild("child2");
@@ -137,7 +171,8 @@ public class TreeTest {
 
     @Test
     public void checkBfsThrowsConcurrentModificationException() {
-        Tree<String> tree = new Tree<>("root", "DFS");
+        Tree<String> tree = new Tree<>("root");
+        tree.setIterator(Tree.iteratorTypes.Dfs);
         Tree<String> child = tree.addChild("child1");
         child.addChild("child5");
         Iterator<String> iterator = tree.iterator();
