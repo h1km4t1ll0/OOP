@@ -25,7 +25,4 @@ jacocoTestReport {
     }
 }
 
-java {
-    sourceCompatibility = "18"
-    targetCompatibility = "18"
-}
+sourceCompatibility = "17"
