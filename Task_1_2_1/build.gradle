@@ -25,4 +25,4 @@ jacocoTestReport {
     }
 }
 
-sourceCompatibility = "17"
+targetCompatibility = "17"
