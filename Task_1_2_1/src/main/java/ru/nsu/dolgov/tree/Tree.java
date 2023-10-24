@@ -93,17 +93,14 @@ public class Tree<T> implements Iterable<T> {
      */
     @Override
     public int hashCode() {
-        int nodeHash = Objects.hash(this.value);
-
-        if (this.parentNode != null) {
-            nodeHash += Objects.hash(this.parentNode.value);
+        int result = Objects.hash(this.value);
+        if (parentNode != null) {
+            result += Objects.hash(parentNode.value);
         }
-
-        for (Tree<?> childNode : this.childNodes) {
-            nodeHash += childNode.hashCode();
+        for (Tree<?> child : childNodes) {
+            result += child.hashCode();
         }
-
-        return nodeHash;
+        return result;
     }
 
     /**
@@ -114,11 +111,11 @@ public class Tree<T> implements Iterable<T> {
      */
     @Override
     public boolean equals(Object o) {
-        if (o == this) {
+        if (this == o) {
             return true;
         }
 
-        if (!(o instanceof Tree)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
@@ -132,7 +129,7 @@ public class Tree<T> implements Iterable<T> {
             return false;
         }
 
-        return this.value.equals(otherTree.value) && this.hashCode() == o.hashCode();
+        return this.value.equals(otherTree.value);
     }
 
     /**
