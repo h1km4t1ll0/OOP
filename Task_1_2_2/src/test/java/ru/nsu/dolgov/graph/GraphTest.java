@@ -39,4 +39,5 @@ public class GraphTest {
         System.out.println("A graph contains an edge between 2 and 4: " +
                 graph.containsEdge(2, 4));
     }
+
 }
