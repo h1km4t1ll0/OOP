@@ -174,6 +174,7 @@ public class Tree<T> implements Iterable<T> {
 
         /**
          * Overriding of the next() method for the tree.
+         * Throws exception only if iterating from root.
          *
          * @return - value of the next node.
          */
@@ -219,6 +220,7 @@ public class Tree<T> implements Iterable<T> {
 
         /**
          * Overriding of the next() method for the tree.
+         * Throws exception only if iterating from root.
          *
          * @return - value of the next node.
          */
