@@ -1,9 +1,6 @@
 package ru.nsu.dolgov.graph;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 /**
  * Class for Graph implementation.
@@ -12,35 +9,35 @@ import java.util.HashMap;
  * @version 1.0
  */
 class Graph<T> {
-    private final Map<T, List<T>> verticesMap = new HashMap<>();
+    private final Map<T, ArrayList<Edge<T>>> incidenceList = new HashMap<>();
 
     /**
      * This method adds a new vertex to the graph.
      *
-     * @param vertex - vertex to be added.
+     * @param vertex vertex to be added.
      */
     public void addNewVertex(T vertex) {
-        verticesMap.put(vertex, new LinkedList<>());
+        incidenceList.put(vertex, new ArrayList<>());
     }
 
     /**
      * This method adds an edge between source and destination.
      *
-     * @param source        - source vertex.
-     * @param destination   - destination vertex.
-     * @param bidirectional - whether an edge bidirectional or not.
+     * @param source        source vertex.
+     * @param destination   destination vertex.
+     * @param bidirectional whether an edge bidirectional or not.
      */
-    public void addNewEdge(T source, T destination, boolean bidirectional) {
-        if (!verticesMap.containsKey(source))
+    public void addEdge(T source, T destination, T value, boolean bidirectional) {
+        if (!incidenceList.containsKey(source))
             addNewVertex(source);
-        if (!verticesMap.containsKey(destination)) {
+        if (!incidenceList.containsKey(destination)) {
             addNewVertex(destination);
         }
 
-        verticesMap.get(source).add(destination);
+        incidenceList.get(source).add(new Edge<>(value, source, destination));
 
         if (bidirectional) {
-            verticesMap.get(destination).add(source);
+            incidenceList.get(destination).add(new Edge<>(value, destination, source));
         }
     }
 
@@ -50,7 +47,7 @@ class Graph<T> {
      * @return - integer value of vertices in the graph.
      */
     public int countVertices() {
-        return verticesMap.keySet().size();
+        return incidenceList.keySet().size();
     }
 
     /**
@@ -61,12 +58,14 @@ class Graph<T> {
      */
     public int countEdges(boolean bidirectionally) {
         int count = 0;
-        for (T v : verticesMap.keySet()) {
-            count = count + verticesMap.get(v).size();
+        for (T v : incidenceList.keySet()) {
+            count += incidenceList.get(v).size();
         }
+
         if (bidirectionally) {
             count = count / 2;
         }
+
         return count;
     }
 
@@ -77,7 +76,7 @@ class Graph<T> {
      * @return - whether a graph contains a vertex or not.
      */
     public boolean containsVertex(T vertex) {
-        return verticesMap.containsKey(vertex);
+        return incidenceList.containsKey(vertex);
     }
 
     /**
@@ -88,7 +87,18 @@ class Graph<T> {
      * @return - true if the graph contains an edge else false.
      */
     public boolean containsEdge(T sourceVertex, T destinationVertex) {
-        return verticesMap.get(sourceVertex).contains(destinationVertex);
+        return incidenceList.get(sourceVertex).stream().filter(
+                edge -> edge.destVertex == destinationVertex).toList().size() != 0;
+    }
+
+    public ArrayList<Edge<T>> getEdges() {
+        HashSet<Edge<T>> edgesSet = new HashSet<>();
+        this.incidenceList.values().forEach(edgesSet::addAll);
+        return new ArrayList<>(edgesSet);
+    }
+
+    public ArrayList<T> getVertices() {
+        return new ArrayList<>(this.incidenceList.keySet());
     }
 
     /**
@@ -96,47 +106,45 @@ class Graph<T> {
      *
      * @return - string representation of the adjacency matrix.
      */
-    public String getAdjacencyList() {
-        StringBuilder builder = new StringBuilder();
-        for (T v : verticesMap.keySet()) {
-            builder.append(v.toString() + ": ");
-            for (T w : verticesMap.get(v)) {
-                builder.append(w.toString() + " ");
-            }
-            builder.append("\n");
-        }
-        return (builder.toString());
-    }
-
-    public String getAdjacencyMatrix() {
-        StringBuilder builder = new StringBuilder();
-
-        builder.append("   ");
-        for (T v : verticesMap.keySet()) {
-            builder.append(v.toString() + " ");
-        }
-        builder.append("\n");
-        builder.append("   ");
-        for (T v : verticesMap.keySet()) {
-            builder.append("- ");
-        }
-        builder.append("\n");
-        for (T v : verticesMap.keySet()) {
-            builder.append(v.toString() + "| ");
-
-            var currentVertexList = verticesMap.get(v);
-            for (T v_ : verticesMap.keySet()) {
-                if (currentVertexList.contains(v_)) {
-                    builder.append("1 ");
+    public ArrayList<ArrayList<T>> getIncidentMatrix(ArrayList<Edge<T>> edges, ArrayList<T> vertices) {
+        ArrayList<ArrayList<T>> incidentMatrix = new ArrayList<>();
+        int counter = 0;
+        for (T vertex : vertices) {
+            incidentMatrix.add(counter, new ArrayList<>());
+            for (Edge<T> edge : edges) {
+                if (edge.incident(vertex)) {
+                    incidentMatrix.get(counter).add(edge.value);
                 } else {
-                    builder.append( "0 ");
+                    incidentMatrix.get(counter).add(null);
                 }
             }
-//            for (T w : verticesMap.get(v)) {
-//                builder.append(w.toString() + " ");
-//            }
-            builder.append("\n");
+            counter++;
         }
-        return builder.toString();
+
+        return incidentMatrix;
+    }
+
+    public ArrayList<ArrayList<T>> getAdjacencyMatrix() {
+        ArrayList<ArrayList<T>> adjacencyMatrix = new ArrayList<>();
+        int counter = 0;
+        for (T sourceVertex : this.incidenceList.keySet()) {
+            adjacencyMatrix.add(counter, new ArrayList<>());
+            for (T destVertex : this.incidenceList.keySet()) {
+                for (Edge<T> edge : this.incidenceList.get(destVertex)) {
+                    if (edge.sourceVertex == sourceVertex && edge.destVertex == destVertex) {
+                        adjacencyMatrix.get(counter).add(edge.value);
+                    } else {
+                        adjacencyMatrix.get(counter).add(null);
+                    }
+                }
+            }
+            counter++;
+        }
+
+        return adjacencyMatrix;
+    }
+
+    public Map<T, ArrayList<Edge<T>>> getIncidenceList() {
+        return this.incidenceList;
     }
 }
