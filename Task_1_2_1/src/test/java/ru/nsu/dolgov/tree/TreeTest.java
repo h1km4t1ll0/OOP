@@ -1,8 +1,8 @@
 package ru.nsu.dolgov.tree;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ConcurrentModificationException;
@@ -58,7 +58,7 @@ public class TreeTest {
         tree1.addChild("child");
         Tree<String> tree2 = new Tree<>("root");
         tree2.addChild("otherChild");
-        assertNotSame(tree1, tree2);
+        assertNotEquals(tree1, tree2);
     }
 
     @Test
@@ -75,7 +75,7 @@ public class TreeTest {
         tree2.addChild("c");
         child21.addChild("e");
         child21.addChild("d");
-        assertNotSame(tree1, tree2);
+        assertNotEquals(tree1, tree2);
     }
 
     @Test
@@ -85,7 +85,7 @@ public class TreeTest {
         Tree<String> tree2 = new Tree<>("root");
         Tree<String> childTree2 = tree2.addChild("child");
         childTree2.addChild("child2");
-        assertNotSame(tree1, tree2);
+        assertNotEquals(tree1, tree2);
     }
 
     @Test
@@ -93,7 +93,7 @@ public class TreeTest {
         Tree<String> tree1 = new Tree<>("root");
         Tree<String> tree2 = new Tree<>("root");
         tree2.addChild("child");
-        assertNotSame(tree1, tree2);
+        assertNotEquals(tree1, tree2);
     }
 
     @Test
@@ -101,7 +101,7 @@ public class TreeTest {
         Tree<Integer> tree1 = new Tree<>(1);
         Tree<Integer> tree2 = new Tree<>(2);
         tree2.addChild(49);
-        assertNotSame(tree1, tree2);
+        assertNotEquals(tree1, tree2);
     }
 
     @Test

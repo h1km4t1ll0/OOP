@@ -121,15 +121,21 @@ public class Tree<T> implements Iterable<T> {
 
         Tree<?> otherTree = (Tree<?>) o;
 
-        if (this.parentNode == null && otherTree.parentNode != null) {
+        if (!this.value.equals(otherTree.value)) {
             return false;
         }
 
-        if (this.parentNode != null && !this.parentNode.value.equals(otherTree.parentNode.value)) {
+        if (this.childNodes.size() != otherTree.childNodes.size()) {
             return false;
         }
 
-        return this.value.equals(otherTree.value);
+        for (int i = 0; i < this.childNodes.size(); i++) {
+            if (!this.childNodes.get(i).equals(otherTree.childNodes.get(i))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
