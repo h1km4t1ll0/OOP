@@ -8,7 +8,7 @@ import java.util.*;
  * @author Долгов Даниил
  * @version 1.0
  */
-class Graph<T> {
+public class Graph<T> {
     private final Map<T, ArrayList<Edge<T>>> incidenceList = new HashMap<>();
 
     /**

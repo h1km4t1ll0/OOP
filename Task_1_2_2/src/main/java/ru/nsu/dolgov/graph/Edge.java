@@ -1,9 +1,9 @@
 package ru.nsu.dolgov.graph;
 
 public class Edge<E>{
-    E value;
-    E sourceVertex;
-    E destVertex;
+    public E value;
+    public E sourceVertex;
+    public E destVertex;
 
     Edge(E value, E sourceVertex, E destVertex) {
         this.value = value;

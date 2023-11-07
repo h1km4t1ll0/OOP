@@ -1,4 +1,7 @@
-package ru.nsu.dolgov.graph;
+package ru.nsu.dolgov.graph.utils;
+
+import ru.nsu.dolgov.graph.Edge;
+import ru.nsu.dolgov.graph.Graph;
 
 import java.util.*;
 
