@@ -58,7 +58,7 @@ public class CreditBook {
                 .collect(Collectors.toList())
                 .stream()
                 .map(each -> each.get(each.size() - 1))
-                .toList();
+                .collect(Collectors.toList());
 
         IntStream def = lastSubjects.stream().mapToInt((Subject subject) -> subject.mark);
         this.semesters.getStreamOfAllSubjects();
