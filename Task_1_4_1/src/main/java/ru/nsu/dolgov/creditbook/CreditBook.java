@@ -1,6 +1,10 @@
 package ru.nsu.dolgov.creditbook;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -146,7 +150,7 @@ public class CreditBook {
     }
 
     /**
-     * Method to add
+     * Method to add or change subject mark.
      *
      * @param subjectName        subject name.
      * @param mark               mark.
@@ -167,8 +171,8 @@ public class CreditBook {
 
         boolean subjectFoundFlag = false;
         for (Subject existingGrade : this.semesters.get(semester)) {
-            if (existingGrade.name.equals(subjectName) &&
-                    existingGrade.semesterNumber.equals(semester)) {
+            if (existingGrade.name.equals(subjectName)
+                    && existingGrade.semesterNumber.equals(semester)) {
                 existingGrade.mark = mark;
                 existingGrade.dateOfExam = dateOfExam;
                 existingGrade.teacherCredentials = teacherCredentials;
@@ -212,7 +216,6 @@ public class CreditBook {
 
     /**
      * Method to determine whether student can achieve red diploma or not.
-     * @return true if red diploma available else false.
      */
     public boolean hasRedDiploma() {
         Set<Integer> keys = this.semesters.keySet();
@@ -233,7 +236,8 @@ public class CreditBook {
                 satisfactoryCount++;
             }
 
-            if (subject.name.equals("Квалификационная работа") && subject.mark.equals(5)) {
+            if (subject.name.equals("Квалификационная работа")
+                    && subject.mark.equals(5)) {
                 hasExcellentQualificationWork = true;
             }
 
