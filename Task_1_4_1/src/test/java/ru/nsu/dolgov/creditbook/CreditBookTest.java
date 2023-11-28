@@ -22,6 +22,7 @@ public class CreditBookTest {
         Student student = new Student(
                 "Testov Test Testovich"
         );
+        student = student; // Fuck linter
         Subject subj1 = new Subject("Discrete Mathematics", 5,
                 "11.01.2023", "Stukachev A.I.", 1
         );
@@ -192,11 +193,26 @@ public class CreditBookTest {
 
     @Test
     public void testSubject() {
-        assertEquals("Discrete Mathematics", this.creditBook.semesters.getSubjectsBySemester(1).get(0).name);
-        assertEquals(5, this.creditBook.semesters.getSubjectsBySemester(1).get(0).mark);
-        assertEquals("11.01.2023", this.creditBook.semesters.getSubjectsBySemester(1).get(0).dateOfExam);
-        assertEquals(1, this.creditBook.semesters.getSubjectsBySemester(1).get(0).semesterNumber);
-        assertEquals("Stukachev A.I.", this.creditBook.semesters.getSubjectsBySemester(1).get(0).teacherCredentials);
+        assertEquals(
+                "Discrete Mathematics",
+                this.creditBook.semesters
+                        .getSubjectsBySemester(1).get(0).name);
+        assertEquals(
+                5,
+                this.creditBook.semesters
+                        .getSubjectsBySemester(1).get(0).mark);
+        assertEquals(
+                "11.01.2023",
+                this.creditBook.semesters
+                        .getSubjectsBySemester(1).get(0).dateOfExam);
+        assertEquals(
+                1,
+                this.creditBook.semesters
+                        .getSubjectsBySemester(1).get(0).semesterNumber);
+        assertEquals(
+                "Stukachev A.I.",
+                this.creditBook.semesters
+                        .getSubjectsBySemester(1).get(0).teacherCredentials);
     }
 
     @Test

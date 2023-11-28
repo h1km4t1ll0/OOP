@@ -105,7 +105,9 @@ public class Semesters {
      * @return list of all subjects with provided name.
      */
     List<Subject> getSubjectsByName(String subjectName) {
-        return this.getStreamOfAllSubjects().filter(subject -> subject.name.equals(subjectName)).toList();
+        return this.getStreamOfAllSubjects().filter(
+                subject -> subject.name.equals(subjectName)
+        ).toList();
     }
 
     /**
@@ -114,6 +116,8 @@ public class Semesters {
      * @return list of all distinct subject names.
      */
     List<String> getSubjectNames() {
-        return this.getStreamOfAllSubjects().map(subject -> subject.name).distinct().toList();
+        return this.getStreamOfAllSubjects().map(
+                subject -> subject.name
+        ).distinct().toList();
     }
 }
