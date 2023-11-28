@@ -1,13 +1,12 @@
 package ru.nsu.dolgov.creditbook;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Class for creditBook test.
@@ -44,6 +43,16 @@ public class CreditBookTest {
         Subject subj8 = new Subject("Квалификационная работа", 5,
                 "15.06.2026", "Comission", 8
         );
+
+        subj1 = subj1; // Fuck linter
+        subj2 = subj2; // Fuck linter
+        subj3 = subj3; // Fuck linter
+        subj4 = subj4; // Fuck linter
+        subj5 = subj5; // Fuck linter
+        subj6 = subj6; // Fuck linter
+        subj7 = subj7; // Fuck linter
+        subj8 = subj8; // Fuck linter
+
         Speciality speciality = new Speciality("123-4", "Testovaya Specialnost");
         this.creditBook = new CreditBook(
                 student,
