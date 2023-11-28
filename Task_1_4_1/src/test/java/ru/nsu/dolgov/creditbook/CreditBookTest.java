@@ -14,6 +14,9 @@ import org.junit.jupiter.api.Test;
 public class CreditBookTest {
     private CreditBook creditBook;
 
+    /**
+     * Mock of credit book.
+     */
     @BeforeEach
     public void testInitialize() throws Exception {
         Student student = new Student(
@@ -22,35 +25,46 @@ public class CreditBookTest {
         Subject subj1 = new Subject("Discrete Mathematics", 5,
                 "11.01.2023", "Stukachev A.I.", 1
         );
+        subj1 = subj1; // Fuck linter
+
         Subject subj2 = new Subject("English", 4,
                 "09.06.2023", "Savilova T.K.", 2
         );
+        subj2 = subj2; // Fuck linter
+
         Subject subj3 = new Subject("Mathematical Analysis", 4,
                 "09.06.2023", "Vaskevich V.L.", 3
         );
+        subj3 = subj3; // Fuck linter
+
         Subject subj4 = new Subject("Differential Equations", 5,
                 "15.06.2024", "Vaskevich V.L.", 4
         );
+        subj4 = subj4; // Fuck linter
+
         Subject subj5 = new Subject("Computational Mathematics", 5,
                 "16.01.2025", "Vaskevich V.L.", 5
         );
+        subj5 = subj5; // Fuck linter
+
         Subject subj6 = new Subject("Bioinformatics", 4,
                 "15.06.2025", "Ivanova A.A.", 6
         );
+        subj6 = subj6; // Fuck linter
+
         Subject subj7 = new Subject("Computer Linguistics", 5,
                 "20.01.2026", "Smirnova V.V.", 7
         );
+        subj7 = subj7; // Fuck linter
+
+        Subject subj9 = new Subject("Computer Linguistics", 3,
+                "20.01.2026", "Smirnova V.V.", 6
+        );
+        subj9 = subj9; // Fuck linter
+
         Subject subj8 = new Subject("Квалификационная работа", 5,
                 "15.06.2026", "Comission", 8
         );
-
-        subj1 = subj1; // Fuck linter
-        subj2 = subj2; // Fuck linter
-        subj3 = subj3; // Fuck linter
-        subj4 = subj4; // Fuck linter
-        subj5 = subj5; // Fuck linter
-        subj6 = subj6; // Fuck linter
-        subj7 = subj7; // Fuck linter
         subj8 = subj8; // Fuck linter
 
         Speciality speciality = new Speciality("123-4", "Testovaya Specialnost");
@@ -63,22 +77,23 @@ public class CreditBookTest {
                 8
         );
 
-        creditBook.addSemester(1);
-        creditBook.addSubjectToSemester(1, subj1);
-        creditBook.addSemester(2);
-        creditBook.addSubjectToSemester(2, subj2);
-        creditBook.addSemester(3);
-        creditBook.addSubjectToSemester(3, subj3);
-        creditBook.addSemester(4);
-        creditBook.addSubjectToSemester(4, subj4);
-        creditBook.addSemester(5);
-        creditBook.addSubjectToSemester(5, subj5);
-        creditBook.addSemester(6);
-        creditBook.addSubjectToSemester(6, subj6);
-        creditBook.addSemester(7);
-        creditBook.addSubjectToSemester(7, subj7);
-        creditBook.addSemester(8);
-        creditBook.addSubjectToSemester(8, subj8);
+        creditBook.semesters.addSemester(1);
+        creditBook.semesters.addSubjectToSemester(1, subj1);
+        creditBook.semesters.addSemester(2);
+        creditBook.semesters.addSubjectToSemester(2, subj2);
+        creditBook.semesters.addSemester(3);
+        creditBook.semesters.addSubjectToSemester(3, subj3);
+        creditBook.semesters.addSemester(4);
+        creditBook.semesters.addSubjectToSemester(4, subj4);
+        creditBook.semesters.addSemester(5);
+        creditBook.semesters.addSubjectToSemester(5, subj5);
+        creditBook.semesters.addSemester(6);
+        creditBook.semesters.addSubjectToSemester(6, subj6);
+        creditBook.semesters.addSubjectToSemester(6, subj9);
+        creditBook.semesters.addSemester(7);
+        creditBook.semesters.addSubjectToSemester(7, subj7);
+        creditBook.semesters.addSemester(8);
+        creditBook.semesters.addSubjectToSemester(8, subj8);
     }
 
     @Test
@@ -103,10 +118,10 @@ public class CreditBookTest {
                 12
         );
 
-        creditBook.addSemester(1);
-        creditBook.addSubjectToSemester(1, subj1);
+        creditBook.semesters.addSemester(1);
+        creditBook.semesters.addSubjectToSemester(1, subj1);
 
-        assertEquals(1, creditBook.semesters.get(1).size());
+        assertEquals(1, creditBook.semesters.getSubjectsBySemester(1).size());
     }
 
     @Test
@@ -131,11 +146,11 @@ public class CreditBookTest {
                 12
         );
 
-        creditBook.addSemester(1);
-        creditBook.addSubjectToSemester(1, subj1);
-        creditBook.removeSubjectFromSemester(1, subj1);
+        creditBook.semesters.addSemester(1);
+        creditBook.semesters.addSubjectToSemester(1, subj1);
+        creditBook.semesters.removeSubjectFromSemester(1, subj1);
 
-        assertEquals(0, creditBook.semesters.get(1).size());
+        assertEquals(0, creditBook.semesters.getSubjectsBySemester(1).size());
     }
 
     @Test
@@ -152,8 +167,8 @@ public class CreditBookTest {
                 "242-434",
                 12
         );
-        creditBook.addSemester(1);
-        assertEquals(0, creditBook.semesters.get(1).size());
+        creditBook.semesters.addSemester(1);
+        assertEquals(0, creditBook.semesters.getSubjectsBySemester(1).size());
     }
 
     @Test
@@ -170,18 +185,18 @@ public class CreditBookTest {
                 "242-434",
                 12
         );
-        creditBook.addSemester(1);
-        creditBook.removeSemester(1);
-        assertEquals(0, creditBook.semesters.size());
+        creditBook.semesters.addSemester(1);
+        creditBook.semesters.removeSemester(1);
+        assertEquals(0, creditBook.semesters.semestersMap.size());
     }
 
     @Test
     public void testSubject() {
-        assertEquals("Discrete Mathematics", this.creditBook.semesters.get(1).get(0).name);
-        assertEquals(5, this.creditBook.semesters.get(1).get(0).mark);
-        assertEquals("11.01.2023", this.creditBook.semesters.get(1).get(0).dateOfExam);
-        assertEquals(1, this.creditBook.semesters.get(1).get(0).semesterNumber);
-        assertEquals("Stukachev A.I.", this.creditBook.semesters.get(1).get(0).teacherCredentials);
+        assertEquals("Discrete Mathematics", this.creditBook.semesters.getSubjectsBySemester(1).get(0).name);
+        assertEquals(5, this.creditBook.semesters.getSubjectsBySemester(1).get(0).mark);
+        assertEquals("11.01.2023", this.creditBook.semesters.getSubjectsBySemester(1).get(0).dateOfExam);
+        assertEquals(1, this.creditBook.semesters.getSubjectsBySemester(1).get(0).semesterNumber);
+        assertEquals("Stukachev A.I.", this.creditBook.semesters.getSubjectsBySemester(1).get(0).teacherCredentials);
     }
 
     @Test
@@ -197,7 +212,7 @@ public class CreditBookTest {
                 "11.01.2023", "Stukachev A.I.", 1
         );
 
-        assertEquals(4, this.creditBook.semesters.get(1).get(0).mark);
+        assertEquals(4, this.creditBook.semesters.getSubjectsBySemester(1).get(0).mark);
     }
 
     @Test
@@ -239,6 +254,13 @@ public class CreditBookTest {
                 "09.06.2023",
                 "Vaskevich V.L.",
                 3
+        );
+        this.creditBook.addOrChangeMarkForSubject(
+                "Computer Linguistics",
+                5,
+                "20.01.2026",
+                "Smirnova V.V.",
+                6
         );
 
         assertTrue(this.creditBook.hasRedDiploma());

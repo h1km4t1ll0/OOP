@@ -1,10 +1,8 @@
 package ru.nsu.dolgov.creditbook;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.stream.IntStream;
 
 
 /**
@@ -16,8 +14,7 @@ public class CreditBook {
     Speciality speciality;
     String dateOfCredit;
     String orderNumber;
-    Map<Integer, List<Subject>> semesters;
-    Integer maxSemesterNumber;
+    Semesters semesters;
 
     /**
      * Base constructor.
@@ -41,53 +38,7 @@ public class CreditBook {
         this.speciality = speciality;
         this.dateOfCredit = dateOfCredit;
         this.orderNumber = orderNumber;
-        this.semesters = new HashMap<>();
-        this.maxSemesterNumber = maxSemesterNumber;
-    }
-
-    /**
-     * Method to add a subject to the semester.
-     *
-     * @param semester int representation of the semester e.g. 1, 2, etc.
-     * @param subject  subject instance to be added.
-     */
-    void addSubjectToSemester(Integer semester, Subject subject) {
-        this.semesters.get(semester).add(subject);
-    }
-
-    /**
-     * Method to remove a subject from the semester.
-     *
-     * @param semester int representation of the semester e.g. 1, 2, etc.
-     * @param subject  subject instance to be removed.
-     */
-    void removeSubjectFromSemester(Integer semester, Subject subject) {
-        this.semesters.get(semester).remove(subject);
-    }
-
-    /**
-     * Method to add a new semester.
-     *
-     * @param semesterNumber int representation of the semester e.g. 1, 2, etc.
-     */
-    void addSemester(Integer semesterNumber) throws Exception {
-        if (this.semesters.containsKey(semesterNumber) || semesterNumber > maxSemesterNumber) {
-            throw new Exception("Semester already exists!");
-        }
-
-        this.semesters.put(semesterNumber, new ArrayList<>());
-    }
-
-    /**
-     * Method to remove a semester.
-     *
-     * @param semesterNumber int representation of the semester e.g. 1, 2, etc.
-     */
-    void removeSemester(Integer semesterNumber) throws Exception {
-        if (!this.semesters.containsKey(semesterNumber)) {
-            throw new Exception("Can't find a semester by provided semester number!");
-        }
-        this.semesters.remove(semesterNumber);
+        this.semesters = new Semesters(maxSemesterNumber);
     }
 
     /**
@@ -96,37 +47,22 @@ public class CreditBook {
      * @return average point.
      */
     public double calculateAveragePoint() {
-        Set<Integer> keys = this.semesters.keySet();
-        List<Subject> allSubjects = new ArrayList<>();
-        for (Integer key : keys) {
-            allSubjects.addAll(this.semesters.get(key));
-        }
+        List<Subject> lastSubjects = this.semesters.getSubjectNames()
+                .stream()
+                .map(
+                        subjectName -> this.semesters.getSubjectsByName(subjectName)
+                                .stream()
+                                .sorted(Comparator.comparing(subject -> subject.semesterNumber))
+                                .toList())
+                .toList()
+                .stream()
+                .map(each -> each.get(each.size() - 1))
+                .toList();
 
-        List<Subject> lastSubjects = new ArrayList<>();
-
-        for (Subject subject : allSubjects) {
-            boolean subjectFound = false;
-            for (int i = lastSubjects.size() - 1; i >= 0; i--) {
-                if (lastSubjects.get(i).name.equals(subject.name)
-                        && lastSubjects.get(i).semesterNumber.equals(subject.semesterNumber)) {
-                    lastSubjects.set(i, subject);
-                    subjectFound = true;
-                    break;
-                }
-            }
-            if (!subjectFound) {
-                lastSubjects.add(subject);
-            }
-        }
-
-        double totalPoints = 0;
-        int totalMarks = 0;
-
-        for (Subject subject : lastSubjects) {
-            Integer mark = subject.mark;
-            totalPoints += mark;
-            totalMarks += 1;
-        }
+        IntStream def = lastSubjects.stream().mapToInt((Subject subject) -> subject.mark);
+        this.semesters.getStreamOfAllSubjects();
+        double totalPoints = def.sum();
+        int totalMarks = lastSubjects.size();
 
         return totalMarks > 0 ? totalPoints / totalMarks : 0;
     }
@@ -138,15 +74,11 @@ public class CreditBook {
      * @return boolean value.
      */
     boolean canGetUpperScholarship(Integer currentSemester) {
-        List<Subject> currentSubjects = this.semesters.get(currentSemester);
-
-        for (Subject subject : currentSubjects) {
-            if (subject.mark <= 3) {
-                return false;
-            }
-        }
-
-        return true;
+        return this.semesters.getSubjectsBySemester(currentSemester)
+                .stream()
+                .noneMatch(
+                        (Subject subject) -> subject.mark <= 3
+                );
     }
 
     /**
@@ -170,7 +102,7 @@ public class CreditBook {
         }
 
         boolean subjectFoundFlag = false;
-        for (Subject existingGrade : this.semesters.get(semester)) {
+        for (Subject existingGrade : this.semesters.getSubjectsBySemester(semester)) {
             if (existingGrade.name.equals(subjectName)
                     && existingGrade.semesterNumber.equals(semester)) {
                 existingGrade.mark = mark;
@@ -189,7 +121,7 @@ public class CreditBook {
                     teacherCredentials,
                     semester
             );
-            this.semesters.get(semester).add(newSubject);
+            this.semesters.addSubjectToSemester(semester, newSubject);
         }
     }
 
@@ -200,49 +132,25 @@ public class CreditBook {
      * @return list of subjects
      */
     public List<Subject> getSubjectMarks(String subjectName) {
-        List<Subject> subjectGrades = new ArrayList<>();
-
-        Set<Integer> keys = this.semesters.keySet();
-        for (Integer key : keys) {
-            for (Subject subject : this.semesters.get(key)) {
-                if (subject.name.equals(subjectName)) {
-                    subjectGrades.add(subject);
-                }
-            }
-        }
-
-        return subjectGrades;
+        return this.semesters.getStreamOfAllSubjects().filter(
+                (Subject subject) -> subject.name.equals(subjectName)
+        ).toList();
     }
 
     /**
      * Method to determine whether student can achieve red diploma or not.
      */
     public boolean hasRedDiploma() {
-        Set<Integer> keys = this.semesters.keySet();
-        List<Subject> allSubjects = new ArrayList<>();
-        for (Integer key : keys) {
-            allSubjects.addAll(this.semesters.get(key));
-        }
-
-        int excellentCount = 0;
-        int satisfactoryCount = 0;
-        boolean hasExcellentQualificationWork = false;
-        int totalSubjects = 0;
-
-        for (Subject subject : allSubjects) {
-            if (subject.mark.equals(5)) {
-                excellentCount++;
-            } else if (subject.mark.equals(3)) {
-                satisfactoryCount++;
-            }
-
-            if (subject.name.equals("Квалификационная работа")
-                    && subject.mark.equals(5)) {
-                hasExcellentQualificationWork = true;
-            }
-
-            totalSubjects++;
-        }
+        int totalSubjects = this.semesters.getAllSubjects().size();
+        int excellentCount = (int) this.semesters.getStreamOfAllSubjects().filter(
+                (Subject subject) -> subject.mark.equals(5)
+        ).count();
+        int satisfactoryCount = (int) this.semesters.getStreamOfAllSubjects().filter(
+                (Subject subject) -> subject.mark.equals(3)
+        ).count();
+        boolean hasExcellentQualificationWork = this.semesters.getStreamOfAllSubjects().anyMatch(
+                (Subject subject) -> subject.name.equals("Квалификационная работа") && subject.mark.equals(5)
+        );
 
         double percentageExcellent = ((double) excellentCount / totalSubjects) * 100;
         boolean hasExcellentGrades = percentageExcellent >= 75;
