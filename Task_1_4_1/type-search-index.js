@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"ru.nsu.dolgov.creditbook","l":"CreditBook"},{"p":"ru.nsu.dolgov.creditbook","l":"Speciality"},{"p":"ru.nsu.dolgov.creditbook","l":"Student"},{"p":"ru.nsu.dolgov.creditbook","l":"Subject"}]
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"ru.nsu.dolgov.creditbook","l":"CreditBook"},{"p":"ru.nsu.dolgov.creditbook","l":"Semesters"},{"p":"ru.nsu.dolgov.creditbook","l":"Speciality"},{"p":"ru.nsu.dolgov.creditbook","l":"Student"},{"p":"ru.nsu.dolgov.creditbook","l":"Subject"}]
