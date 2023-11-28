@@ -7,11 +7,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
+/**
+ * Class for semesters implementation.
+ */
 public class Semesters {
     Map<Integer, List<Subject>> semestersMap;
     Integer maxSemesterNumber;
 
-    Semesters(Integer maxSemesterNumber){
+    Semesters(Integer maxSemesterNumber) {
         this.semestersMap = new HashMap<>();
         this.maxSemesterNumber = maxSemesterNumber;
     }
@@ -42,7 +45,8 @@ public class Semesters {
      * @param semesterNumber int representation of the semester e.g. 1, 2, etc.
      */
     void addSemester(Integer semesterNumber) throws Exception {
-        if (this.semestersMap.containsKey(semesterNumber) || semesterNumber > this.maxSemesterNumber) {
+        if (this.semestersMap.containsKey(semesterNumber)
+                || semesterNumber > this.maxSemesterNumber) {
             throw new Exception("Semester already exists!");
         }
 
@@ -63,6 +67,7 @@ public class Semesters {
 
     /**
      * Get all subjects.
+     *
      * @return list of all subjects.
      */
     List<Subject> getAllSubjects() {
@@ -76,6 +81,7 @@ public class Semesters {
 
     /**
      * Get stream of all subjects.
+     *
      * @return stream of all subjects.
      */
     Stream<Subject> getStreamOfAllSubjects() {
@@ -84,6 +90,7 @@ public class Semesters {
 
     /**
      * Getter for subjects.
+     *
      * @param semester int representation of the semester e.g. 1, 2, etc.
      * @return list of all subjects in provided semester.
      */
@@ -93,6 +100,7 @@ public class Semesters {
 
     /**
      * Getter for subjects.
+     *
      * @param subjectName name of the subject.
      * @return list of all subjects with provided name.
      */
@@ -102,6 +110,7 @@ public class Semesters {
 
     /**
      * Getter for subjects names.
+     *
      * @return list of all distinct subject names.
      */
     List<String> getSubjectNames() {

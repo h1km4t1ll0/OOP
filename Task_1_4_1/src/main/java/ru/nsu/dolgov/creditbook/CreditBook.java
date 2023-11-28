@@ -149,7 +149,8 @@ public class CreditBook {
                 (Subject subject) -> subject.mark.equals(3)
         ).count();
         boolean hasExcellentQualificationWork = this.semesters.getStreamOfAllSubjects().anyMatch(
-                (Subject subject) -> subject.name.equals("Квалификационная работа") && subject.mark.equals(5)
+                (Subject subject) -> subject.name.equals("Квалификационная работа")
+                        && subject.mark.equals(5)
         );
 
         double percentageExcellent = ((double) excellentCount / totalSubjects) * 100;
