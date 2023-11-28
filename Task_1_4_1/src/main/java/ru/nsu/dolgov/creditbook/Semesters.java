@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -107,7 +108,7 @@ public class Semesters {
     List<Subject> getSubjectsByName(String subjectName) {
         return this.getStreamOfAllSubjects().filter(
                 subject -> subject.name.equals(subjectName)
-        ).toList();
+        ).collect(Collectors.toList());
     }
 
     /**
@@ -118,6 +119,6 @@ public class Semesters {
     List<String> getSubjectNames() {
         return this.getStreamOfAllSubjects().map(
                 subject -> subject.name
-        ).distinct().toList();
+        ).distinct().collect(Collectors.toList());
     }
 }

@@ -2,6 +2,7 @@ package ru.nsu.dolgov.creditbook;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 
@@ -53,8 +54,8 @@ public class CreditBook {
                         subjectName -> this.semesters.getSubjectsByName(subjectName)
                                 .stream()
                                 .sorted(Comparator.comparing(subject -> subject.semesterNumber))
-                                .toList())
-                .toList()
+                                .collect(Collectors.toList()))
+                .collect(Collectors.toList())
                 .stream()
                 .map(each -> each.get(each.size() - 1))
                 .toList();
@@ -134,7 +135,7 @@ public class CreditBook {
     public List<Subject> getSubjectMarks(String subjectName) {
         return this.semesters.getStreamOfAllSubjects().filter(
                 (Subject subject) -> subject.name.equals(subjectName)
-        ).toList();
+        ).collect(Collectors.toList());
     }
 
     /**
