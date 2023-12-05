@@ -9,9 +9,9 @@ import java.util.List;
 public class Parser {
     public final List<String> availableTokens = List.of(
             new String[]{
-                    "*", "+", "-", "/",
-                    "sin", "cos", "log",
-                    "pow", "sqrt"
+                "*", "+", "-", "/",
+                "sin", "cos", "log",
+                "pow", "sqrt"
             }
     );
     private final String stringExpression;

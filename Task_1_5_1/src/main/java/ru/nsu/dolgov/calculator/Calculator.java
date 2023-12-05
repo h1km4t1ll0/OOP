@@ -105,7 +105,7 @@ public class Calculator {
     }
 
     /**
-     * Mrthod for calculating single expression.
+     * Method for calculating single expression.
      *
      * @param operand string operand.
      * @throws ArithmeticException if execution wasn't successfully ended.
