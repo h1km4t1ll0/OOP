@@ -8,7 +8,6 @@ import java.util.stream.Stream;
  */
 public class Calculator {
     private final Expression expression;
-    public double result = 0;
 
     public Calculator(Expression expression) {
         this.expression = expression;
