@@ -37,6 +37,9 @@ public class Calculator {
                 }
                 this.expression.stack.push(firstExpression / secondExpression);
             }
+            default: {
+
+            }
         }
     }
 
@@ -56,6 +59,9 @@ public class Calculator {
                 this.expression.stack.push(
                         Math.cos(this.expression.stack.pop())
                 );
+            }
+            default: {
+
             }
         }
     }
@@ -91,6 +97,9 @@ public class Calculator {
                 this.expression.stack.push(
                         Math.log(expression) / Math.log(base)
                 );
+            }
+            default: {
+
             }
         }
     }
