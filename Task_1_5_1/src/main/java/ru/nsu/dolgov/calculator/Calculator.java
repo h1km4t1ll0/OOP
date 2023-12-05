@@ -1,8 +1,5 @@
 package ru.nsu.dolgov.calculator;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
-
 /**
  * Class for calculator implementation.
  */
