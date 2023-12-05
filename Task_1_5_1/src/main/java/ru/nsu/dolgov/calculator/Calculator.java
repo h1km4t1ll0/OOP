@@ -21,16 +21,19 @@ public class Calculator {
                 this.expression.stack.push(
                         this.expression.stack.pop() * this.expression.stack.pop()
                 );
+                break;
             }
             case "+": {
                 this.expression.stack.push(
                         this.expression.stack.pop() + this.expression.stack.pop()
                 );
+                break;
             }
             case "-": {
                 this.expression.stack.push(
                         this.expression.stack.pop() - this.expression.stack.pop()
                 );
+                break;
             }
             case "/": {
                 double firstExpression = this.expression.stack.pop();
@@ -39,6 +42,7 @@ public class Calculator {
                     throw new ArithmeticException("Division by zero");
                 }
                 this.expression.stack.push(firstExpression / secondExpression);
+                break;
             }
             default: {
 
@@ -57,11 +61,13 @@ public class Calculator {
                 this.expression.stack.push(
                         Math.sin(this.expression.stack.pop())
                 );
+                break;
             }
             case "cos": {
                 this.expression.stack.push(
                         Math.cos(this.expression.stack.pop())
                 );
+                break;
             }
             default: {
 
@@ -81,6 +87,7 @@ public class Calculator {
                         Math.pow(this.expression.stack.pop(),
                                 this.expression.stack.pop())
                 );
+                break;
             }
             case "sqrt": {
                 double expression = this.expression.stack.pop();
@@ -90,6 +97,7 @@ public class Calculator {
                 this.expression.stack.push(
                         Math.sqrt(expression)
                 );
+                break;
             }
             case "log": {
                 double base = this.expression.stack.pop();
@@ -100,6 +108,7 @@ public class Calculator {
                 this.expression.stack.push(
                         Math.log(expression) / Math.log(base)
                 );
+                break;
             }
             default: {
 
@@ -115,10 +124,10 @@ public class Calculator {
      */
     private void calculateSingleExpression(String operand) throws ArithmeticException {
         if (
-                operand.equals("*") ||
-                        operand.equals("+") ||
-                        operand.equals("/") ||
-                        operand.equals("-")
+                operand.equals("*")
+                        || operand.equals("+")
+                        || operand.equals("/")
+                        || operand.equals("-")
         ) {
             this.calculateAlgebraicExpression(operand);
         } else if (
