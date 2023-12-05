@@ -131,8 +131,8 @@ public class Calculator {
         ) {
             this.calculateAlgebraicExpression(operand);
         } else if (
-                operand.equals("cos") ||
-                        operand.equals("sin")
+                operand.equals("cos")
+                        || operand.equals("sin")
         ) {
             this.calculateTrigonometricalExpression(operand);
         } else {
