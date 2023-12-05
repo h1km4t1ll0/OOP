@@ -13,6 +13,17 @@ import org.junit.jupiter.api.Test;
 public class CalculatorTest {
 
     @Test
+    void testMain() throws Exception {
+        Main.main();
+        assertTrue(true);
+    }
+
+    @Test
+    void testCalculate() throws Exception {
+        assertThrows(NoSuchElementException.class, Main::calculate);
+    }
+
+    @Test
     void testBasicExpression() throws Exception {
         String expression = "sin + - 1 2 1";
         double result = Main.calculate(expression);
