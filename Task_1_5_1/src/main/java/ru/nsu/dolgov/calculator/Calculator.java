@@ -17,34 +17,30 @@ public class Calculator {
      */
     private void calculateAlgebraicExpression(String operand) {
         switch (operand) {
-            case "*": {
+            case "*" ->
                 this.expression.stack.push(
                         this.expression.stack.pop() * this.expression.stack.pop()
                 );
-                break;
-            }
-            case "+": {
+
+            case "+" ->
                 this.expression.stack.push(
                         this.expression.stack.pop() + this.expression.stack.pop()
                 );
-                break;
-            }
-            case "-": {
+
+            case "-" ->
                 this.expression.stack.push(
                         this.expression.stack.pop() - this.expression.stack.pop()
                 );
-                break;
-            }
-            case "/": {
+
+            case "/" -> {
                 double firstExpression = this.expression.stack.pop();
                 double secondExpression = this.expression.stack.pop();
                 if (secondExpression == 0) {
                     throw new ArithmeticException("Division by zero");
                 }
                 this.expression.stack.push(firstExpression / secondExpression);
-                break;
             }
-            default: {
+            default -> {
 
             }
         }
@@ -57,19 +53,17 @@ public class Calculator {
      */
     private void calculateTrigonometricalExpression(String operand) {
         switch (operand) {
-            case "sin": {
+            case "sin" ->
                 this.expression.stack.push(
                         Math.sin(this.expression.stack.pop())
                 );
-                break;
-            }
-            case "cos": {
+
+            case "cos" ->
                 this.expression.stack.push(
                         Math.cos(this.expression.stack.pop())
                 );
-                break;
-            }
-            default: {
+
+            default -> {
 
             }
         }
@@ -82,14 +76,13 @@ public class Calculator {
      */
     private void calculateOtherExpression(String operand) {
         switch (operand) {
-            case "pow": {
+            case "pow" ->
                 this.expression.stack.push(
                         Math.pow(this.expression.stack.pop(),
                                 this.expression.stack.pop())
                 );
-                break;
-            }
-            case "sqrt": {
+            
+            case "sqrt" -> {
                 double expression = this.expression.stack.pop();
                 if (expression < 0) {
                     throw new ArithmeticException("Expression is lower than zero");
@@ -97,9 +90,8 @@ public class Calculator {
                 this.expression.stack.push(
                         Math.sqrt(expression)
                 );
-                break;
             }
-            case "log": {
+            case "log" -> {
                 double base = this.expression.stack.pop();
                 double expression = this.expression.stack.pop();
                 if (expression <= 0 || base <= 0 || base == 1) {
@@ -108,9 +100,8 @@ public class Calculator {
                 this.expression.stack.push(
                         Math.log(expression) / Math.log(base)
                 );
-                break;
             }
-            default: {
+            default -> {
 
             }
         }
