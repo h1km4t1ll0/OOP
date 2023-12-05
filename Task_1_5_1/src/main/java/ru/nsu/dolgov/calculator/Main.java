@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Main {
     /**
      * An entrypoint.
+     *
      * @param args command line args.
      */
     public static void main(String[] args) {
@@ -21,6 +22,7 @@ public class Main {
 
     /**
      * Class for calculating the result.
+     *
      * @return double value.
      * @throws Exception while parsing or handling the expression.
      */
@@ -32,6 +34,7 @@ public class Main {
 
     /**
      * Method for parsing input.
+     *
      * @return Expression.
      * @throws Exception when parsing wasn't done.
      */

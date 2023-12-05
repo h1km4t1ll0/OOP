@@ -22,6 +22,7 @@ public class Parser {
 
     /**
      * Parses string to Expression.
+     *
      * @return Expression.
      */
     public Expression parse() {
@@ -31,6 +32,7 @@ public class Parser {
 
     /**
      * Checks if input could be parsed or not.
+     *
      * @return true if could else otherwise.
      */
     public boolean check() {

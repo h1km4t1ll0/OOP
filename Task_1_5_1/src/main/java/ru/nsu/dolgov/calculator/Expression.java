@@ -17,6 +17,7 @@ public class Expression {
 
     /**
      * Method to check whether token is number or not.
+     *
      * @param token string token.
      * @return true if number false otherwise.
      */
