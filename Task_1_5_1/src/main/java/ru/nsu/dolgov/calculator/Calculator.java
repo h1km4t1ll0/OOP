@@ -12,16 +12,19 @@ public class Calculator {
 
     private void calculateAlgebraicExpression(String operand) {
         switch (operand) {
-            case "*" -> this.expression.stack.push(
-                    this.expression.stack.pop() * this.expression.stack.pop()
-            );
-            case "+" -> this.expression.stack.push(
-                    this.expression.stack.pop() + this.expression.stack.pop()
-            );
-            case "-" -> this.expression.stack.push(
-                    this.expression.stack.pop() - this.expression.stack.pop()
-            );
-            case "/" -> {
+            case "*":
+                this.expression.stack.push(
+                        this.expression.stack.pop() * this.expression.stack.pop()
+                );
+            case "+":
+                this.expression.stack.push(
+                        this.expression.stack.pop() + this.expression.stack.pop()
+                );
+            case "-":
+                this.expression.stack.push(
+                        this.expression.stack.pop() - this.expression.stack.pop()
+                );
+            case "/": {
                 double firstExpression = this.expression.stack.pop();
                 double secondExpression = this.expression.stack.pop();
                 if (secondExpression == 0) {
@@ -91,7 +94,7 @@ public class Calculator {
 
     public double calculate() {
         for (int i = this.expression.rawTokens.length - 1; i >= 0; i--) {
-            String token =  this.expression.rawTokens[i];
+            String token = this.expression.rawTokens[i];
             if (Expression.isNumber(token)) {
                 this.expression.stack.push(Double.parseDouble(token));
             } else {
