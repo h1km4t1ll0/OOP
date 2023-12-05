@@ -12,6 +12,7 @@ public class Calculator {
 
     /**
      * Method for calculating algebraic expressions.
+     *
      * @param operand string operand.
      */
     private void calculateAlgebraicExpression(String operand) {
@@ -41,30 +42,38 @@ public class Calculator {
 
     /**
      * Method for calculating trigonometrical expressions.
+     *
      * @param operand string operand.
      */
     private void calculateTrigonometricalExpression(String operand) {
         switch (operand) {
-            case "sin" -> this.expression.stack.push(
-                    Math.sin(this.expression.stack.pop())
-            );
-            case "cos" -> this.expression.stack.push(
-                    Math.cos(this.expression.stack.pop())
-            );
+            case "sin": {
+                this.expression.stack.push(
+                        Math.sin(this.expression.stack.pop())
+                );
+            }
+            case "cos": {
+                this.expression.stack.push(
+                        Math.cos(this.expression.stack.pop())
+                );
+            }
         }
     }
 
     /**
      * Method for calculating other expressions.
+     *
      * @param operand string operand.
      */
     private void calculateOtherExpression(String operand) {
         switch (operand) {
-            case "pow" -> this.expression.stack.push(
-                    Math.pow(this.expression.stack.pop(),
-                            this.expression.stack.pop())
-            );
-            case "sqrt" -> {
+            case "pow": {
+                this.expression.stack.push(
+                        Math.pow(this.expression.stack.pop(),
+                                this.expression.stack.pop())
+                );
+            }
+            case "sqrt": {
                 double expression = this.expression.stack.pop();
                 if (expression < 0) {
                     throw new ArithmeticException("Expression is lower than zero");
@@ -73,7 +82,7 @@ public class Calculator {
                         Math.sqrt(expression)
                 );
             }
-            case "log" -> {
+            case "log": {
                 double base = this.expression.stack.pop();
                 double expression = this.expression.stack.pop();
                 if (expression <= 0 || base <= 0 || base == 1) {
@@ -88,6 +97,7 @@ public class Calculator {
 
     /**
      * Mrthod for calculating single expression.
+     *
      * @param operand string operand.
      * @throws ArithmeticException if execution wasn't successfully ended.
      */
@@ -111,6 +121,7 @@ public class Calculator {
 
     /**
      * Method for calculating the result.
+     *
      * @return double value.
      */
     public double calculate() {
