@@ -15,9 +15,14 @@ public class Expression {
         this.rawTokens = parsedExpression;
     }
 
-    public static boolean isNumber(String str) {
+    /**
+     * Method to check whether token is number or not.
+     * @param token string token.
+     * @return true if number false otherwise.
+     */
+    public static boolean isNumber(String token) {
         try {
-            Double.parseDouble(str);
+            Double.parseDouble(token);
             return true;
         } catch (NumberFormatException e) {
             return false;
