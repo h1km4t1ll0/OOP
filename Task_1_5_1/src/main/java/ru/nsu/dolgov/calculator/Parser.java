@@ -8,11 +8,9 @@ import java.util.List;
  */
 public class Parser {
     public final List<String> availableTokens = List.of(
-            new String[]{
-                "*", "+", "-", "/",
-                "sin", "cos", "log",
-                "pow", "sqrt"
-            }
+            "*", "+", "-", "/",
+            "sin", "cos", "log",
+            "pow", "sqrt"
     );
     private final String stringExpression;
 
@@ -36,8 +34,11 @@ public class Parser {
      * @return true if could else otherwise.
      */
     public boolean check() {
-        return Arrays.stream(this.stringExpression.split("\\s+")).allMatch(
+        System.out.println(Arrays.stream(this.stringExpression.split("\\s+")).allMatch(
                 availableTokens::contains
+        ));
+        return !Arrays.stream(this.stringExpression.split("\\s+")).allMatch(
+                (token) -> this.availableTokens.contains(token) || Expression.isNumber(token)
         );
     }
 }
