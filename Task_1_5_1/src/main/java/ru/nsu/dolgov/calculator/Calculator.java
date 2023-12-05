@@ -17,18 +17,21 @@ public class Calculator {
      */
     private void calculateAlgebraicExpression(String operand) {
         switch (operand) {
-            case "*":
+            case "*": {
                 this.expression.stack.push(
                         this.expression.stack.pop() * this.expression.stack.pop()
                 );
-            case "+":
+            }
+            case "+": {
                 this.expression.stack.push(
                         this.expression.stack.pop() + this.expression.stack.pop()
                 );
-            case "-":
+            }
+            case "-": {
                 this.expression.stack.push(
                         this.expression.stack.pop() - this.expression.stack.pop()
                 );
+            }
             case "/": {
                 double firstExpression = this.expression.stack.pop();
                 double secondExpression = this.expression.stack.pop();
