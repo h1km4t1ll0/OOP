@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -175,10 +175,31 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>static double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#calculate()">calculate</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Method for calculating the result.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>static double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#calculate(java.lang.String)">calculate</a></span>&#8203;(java.lang.String&nbsp;expression)</code></th>
+<td class="colLast">
+<div class="block">Method for calculating the result.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#main(java.lang.String%5B%5D)">main</a></span>&#8203;(java.lang.String[]&nbsp;args)</code></th>
 <td class="colLast">
 <div class="block">An entrypoint.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>static <a href="Expression.html" title="class in ru.nsu.dolgov.calculator">Expression</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#parseInput()">parseInput</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Method for parsing input.</div>
 </td>
 </tr>
 </table>
@@ -227,7 +248,7 @@ extends java.lang.Object</pre>
 <a id="main(java.lang.String[])">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>main</h4>
 <pre class="methodSignature">public static&nbsp;void&nbsp;main&#8203;(java.lang.String[]&nbsp;args)</pre>
@@ -235,6 +256,59 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>args</code> - command line args.</dd>
+</dl>
+</li>
+</ul>
+<a id="calculate()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>calculate</h4>
+<pre class="methodSignature">public static&nbsp;double&nbsp;calculate()
+                        throws java.lang.Exception</pre>
+<div class="block">Method for calculating the result.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>double value.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.Exception</code> - while parsing or handling the expression.</dd>
+</dl>
+</li>
+</ul>
+<a id="calculate(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>calculate</h4>
+<pre class="methodSignature">public static&nbsp;double&nbsp;calculate&#8203;(java.lang.String&nbsp;expression)
+                        throws java.lang.Exception</pre>
+<div class="block">Method for calculating the result.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>expression</code> - expression to be parsed.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>double value.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.Exception</code> - when parsing is not completed.</dd>
+</dl>
+</li>
+</ul>
+<a id="parseInput()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>parseInput</h4>
+<pre class="methodSignature">public static&nbsp;<a href="Expression.html" title="class in ru.nsu.dolgov.calculator">Expression</a>&nbsp;parseInput()
+                             throws java.lang.Exception</pre>
+<div class="block">Method for parsing input.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Expression.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.lang.Exception</code> - when parsing wasn't done.</dd>
 </dl>
 </li>
 </ul>
