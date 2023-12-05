@@ -10,6 +10,10 @@ public class Calculator {
         this.expression = expression;
     }
 
+    /**
+     * Method for calculating algebraic expressions.
+     * @param operand string operand.
+     */
     private void calculateAlgebraicExpression(String operand) {
         switch (operand) {
             case "*":
@@ -35,6 +39,10 @@ public class Calculator {
         }
     }
 
+    /**
+     * Method for calculating trigonometrical expressions.
+     * @param operand string operand.
+     */
     private void calculateTrigonometricalExpression(String operand) {
         switch (operand) {
             case "sin" -> this.expression.stack.push(
@@ -46,6 +54,10 @@ public class Calculator {
         }
     }
 
+    /**
+     * Method for calculating other expressions.
+     * @param operand string operand.
+     */
     private void calculateOtherExpression(String operand) {
         switch (operand) {
             case "pow" -> this.expression.stack.push(
@@ -74,6 +86,11 @@ public class Calculator {
         }
     }
 
+    /**
+     * Mrthod for calculating single expression.
+     * @param operand string operand.
+     * @throws ArithmeticException if execution wasn't successfully ended.
+     */
     private void calculateSingleExpression(String operand) throws ArithmeticException {
         if (
                 operand.equals("*") ||
@@ -92,6 +109,10 @@ public class Calculator {
         }
     }
 
+    /**
+     * Method for calculating the result.
+     * @return double value.
+     */
     public double calculate() {
         for (int i = this.expression.rawTokens.length - 1; i >= 0; i--) {
             String token = this.expression.rawTokens[i];
