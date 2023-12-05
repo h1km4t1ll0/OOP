@@ -8,10 +8,8 @@ import java.util.Scanner;
 public class Main {
     /**
      * An entrypoint.
-     *
-     * @param args command line args.
      */
-    public static void main(String[] args) {
+    public static void main() {
         try {
             System.out.println("Enter the expression:");
             System.out.println("Output: " + calculate());
@@ -27,7 +25,16 @@ public class Main {
      * @throws Exception while parsing or handling the expression.
      */
     public static double calculate() throws Exception {
-        Expression expression = parseInput();
+        Scanner scanner = new Scanner(System.in);
+        String inputString = scanner.nextLine();
+        scanner.close();
+        Parser parser = new Parser(inputString);
+
+        if (parser.check()) {
+            throw new Exception("Invalid argument!");
+        }
+
+        Expression expression = parser.parse();
         Calculator calculator = new Calculator(expression);
         return calculator.calculate();
     }
@@ -49,25 +56,5 @@ public class Main {
         Expression tokens = parser.parse();
         Calculator calculator = new Calculator(tokens);
         return calculator.calculate();
-    }
-
-
-    /**
-     * Method for parsing input.
-     *
-     * @return Expression.
-     * @throws Exception when parsing wasn't done.
-     */
-    public static Expression parseInput() throws Exception {
-        Scanner scanner = new Scanner(System.in);
-        String inputString = scanner.nextLine();
-        scanner.close();
-        Parser parser = new Parser(inputString);
-
-        if (parser.check()) {
-            throw new Exception("Invalid argument!");
-        }
-
-        return parser.parse();
     }
 }
