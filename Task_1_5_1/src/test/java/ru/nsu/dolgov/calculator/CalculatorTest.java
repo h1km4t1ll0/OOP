@@ -13,13 +13,13 @@ import org.junit.jupiter.api.Test;
 public class CalculatorTest {
 
     @Test
-    void testMain() throws Exception {
+    void testMain() {
         Main.main();
         assertTrue(true);
     }
 
     @Test
-    void testCalculate() throws Exception {
+    void testCalculate() {
         assertThrows(NoSuchElementException.class, Main::calculate);
     }
 
@@ -87,6 +87,55 @@ public class CalculatorTest {
     }
 
     @Test
+    void testAdditionDouble() throws Exception {
+        String expression = "+ 5.4 3.78";
+        double result = Main.calculate(expression);
+        assertEquals(9.18, result, 0.0001);
+    }
+
+    @Test
+    void testSubtractionDouble() throws Exception {
+        String expression = "- 5.2 3.89";
+        double result = Main.calculate(expression);
+        assertEquals(1.31, result, 0.0001);
+    }
+
+    @Test
+    void testMultiplicationDouble() throws Exception {
+        String expression = "* 5.4 3.897";
+        double result = Main.calculate(expression);
+        assertEquals(21.0438, result, 0.0001);
+    }
+
+    @Test
+    void testDivisionDouble() throws Exception {
+        String expression = "/ 10.25 2.5";
+        double result = Main.calculate(expression);
+        assertEquals(4.1, result, 0.0001);
+    }
+
+    @Test
+    void testLogDouble() throws Exception {
+        String expression = "log 1.5 2.25";
+        double result = Main.calculate(expression);
+        assertEquals(2, result, 0.0001);
+    }
+
+    @Test
+    void testPowDouble() throws Exception {
+        String expression = "pow 1.5 2";
+        double result = Main.calculate(expression);
+        assertEquals(2.25, result, 0.0001);
+    }
+
+    @Test
+    void testSqrtDouble() throws Exception {
+        String expression = "sqrt 2.25";
+        double result = Main.calculate(expression);
+        assertEquals(1.5, result, 0.0001);
+    }
+
+    @Test
     void testCosineFunction() throws Exception {
         String expression = "cos 0";
         double result = Main.calculate(expression);
@@ -101,7 +150,7 @@ public class CalculatorTest {
 
     @Test
     void testEmptyStackException() {
-        String expression = "log 10"; // Log requires two operands
+        String expression = "log 10";
         assertThrows(NoSuchElementException.class, () -> Main.calculate(expression));
     }
 
@@ -123,4 +172,11 @@ public class CalculatorTest {
         assertThrows(ArithmeticException.class, () -> Main.calculate(expression));
     }
 
+    @Test
+    void e2e() throws Exception {
+        String expression = "pow - + + * sin - cos 0 1 / cos 1 4 " +
+                "log 2 8 / * + - + log 2 8 1 6 1 9 3 sqrt 4 2";
+        double result = Main.calculate(expression);
+        assertEquals(4, result, 0.0001);
+    }
 }
