@@ -174,8 +174,8 @@ public class CalculatorTest {
 
     @Test
     void e2e() throws Exception {
-        String expression = "pow - + + * sin - cos 0 1 / cos 1 4 " +
-                "log 2 8 / * + - + log 2 8 1 6 1 9 3 sqrt 4 2";
+        String expression = "pow - + + * sin - cos 0 1 / cos 1 4 "
+                + "log 2 8 / * + - + log 2 8 1 6 1 9 3 sqrt 4 2";
         double result = Main.calculate(expression);
         assertEquals(4, result, 0.0001);
     }
