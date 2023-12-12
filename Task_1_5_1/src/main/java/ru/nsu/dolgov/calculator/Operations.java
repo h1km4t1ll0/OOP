@@ -1,6 +1,7 @@
 package ru.nsu.dolgov.calculator;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * Enum to handle operations.
@@ -32,7 +33,7 @@ public enum Operations {
     public static Operations getOperation(String alias) throws IndexOutOfBoundsException {
         return Arrays.stream(Operations.values())
                 .filter(each -> each.alias.equals(alias))
-                .toList()
+                .collect(Collectors.toList())
                 .get(0);
     }
 }
