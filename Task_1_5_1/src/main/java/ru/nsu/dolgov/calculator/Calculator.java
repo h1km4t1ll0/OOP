@@ -15,33 +15,33 @@ public class Calculator {
      *
      * @param operand string operand.
      */
-    private void calculateAlgebraicExpression(String operand) {
+    private void calculateAlgebraicExpression(Operations operand) {
         switch (operand) {
-            case "*": {
-                this.expression.stack.push(
-                        this.expression.stack.pop() * this.expression.stack.pop()
+            case MUL: {
+                this.expression.push(
+                        this.expression.pop() * this.expression.pop()
                 );
                 break;
             }
-            case "+": {
-                this.expression.stack.push(
-                        this.expression.stack.pop() + this.expression.stack.pop()
+            case ADD: {
+                this.expression.push(
+                        this.expression.pop() + this.expression.pop()
                 );
                 break;
             }
-            case "-": {
-                this.expression.stack.push(
-                        this.expression.stack.pop() - this.expression.stack.pop()
+            case SUB: {
+                this.expression.push(
+                        this.expression.pop() - this.expression.pop()
                 );
                 break;
             }
-            case "/": {
-                double firstExpression = this.expression.stack.pop();
-                double secondExpression = this.expression.stack.pop();
+            case DIV: {
+                double firstExpression = this.expression.pop();
+                double secondExpression = this.expression.pop();
                 if (secondExpression == 0) {
                     throw new ArithmeticException("Division by zero");
                 }
-                this.expression.stack.push(firstExpression / secondExpression);
+                this.expression.push(firstExpression / secondExpression);
                 break;
             }
             default: {
@@ -55,17 +55,17 @@ public class Calculator {
      *
      * @param operand string operand.
      */
-    private void calculateTrigonometricalExpression(String operand) {
+    private void calculateTrigonometricalExpression(Operations operand) {
         switch (operand) {
-            case "sin": {
-                this.expression.stack.push(
-                        Math.sin(this.expression.stack.pop())
+            case SIN: {
+                this.expression.push(
+                        Math.sin(this.expression.pop())
                 );
                 break;
             }
-            case "cos": {
-                this.expression.stack.push(
-                        Math.cos(this.expression.stack.pop())
+            case COS: {
+                this.expression.push(
+                        Math.cos(this.expression.pop())
                 );
                 break;
             }
@@ -80,32 +80,32 @@ public class Calculator {
      *
      * @param operand string operand.
      */
-    private void calculateOtherExpression(String operand) {
+    private void calculateOtherExpression(Operations operand) {
         switch (operand) {
-            case "pow": {
-                this.expression.stack.push(
-                        Math.pow(this.expression.stack.pop(),
-                                this.expression.stack.pop())
+            case POW: {
+                this.expression.push(
+                        Math.pow(this.expression.pop(),
+                                this.expression.pop())
                 );
                 break;
             }
-            case "sqrt": {
-                double expression = this.expression.stack.pop();
+            case SQRT: {
+                double expression = this.expression.pop();
                 if (expression < 0) {
                     throw new ArithmeticException("Expression is lower than zero");
                 }
-                this.expression.stack.push(
+                this.expression.push(
                         Math.sqrt(expression)
                 );
                 break;
             }
-            case "log": {
-                double base = this.expression.stack.pop();
-                double expression = this.expression.stack.pop();
+            case LOG: {
+                double base = this.expression.pop();
+                double expression = this.expression.pop();
                 if (expression <= 0 || base <= 0 || base == 1) {
                     throw new ArithmeticException("Invalid arguments");
                 }
-                this.expression.stack.push(
+                this.expression.push(
                         Math.log(expression) / Math.log(base)
                 );
                 break;
@@ -122,17 +122,17 @@ public class Calculator {
      * @param operand string operand.
      * @throws ArithmeticException if execution wasn't successfully ended.
      */
-    private void calculateSingleExpression(String operand) throws ArithmeticException {
+    private void calculateSingleExpression(Operations operand) throws ArithmeticException {
         if (
-                operand.equals("*")
-                        || operand.equals("+")
-                        || operand.equals("/")
-                        || operand.equals("-")
+                operand.equals(Operations.MUL)
+                        || operand.equals(Operations.ADD)
+                        || operand.equals(Operations.DIV)
+                        || operand.equals(Operations.SUB)
         ) {
             this.calculateAlgebraicExpression(operand);
         } else if (
-                operand.equals("cos")
-                        || operand.equals("sin")
+                operand.equals(Operations.COS)
+                        || operand.equals(Operations.SIN)
         ) {
             this.calculateTrigonometricalExpression(operand);
         } else {
@@ -146,15 +146,16 @@ public class Calculator {
      * @return double value.
      */
     public double calculate() {
-        for (int i = this.expression.rawTokens.length - 1; i >= 0; i--) {
-            String token = this.expression.rawTokens[i];
+        String[] tokens = this.expression.getRawTokens();
+        for (int i = tokens.length - 1; i >= 0; i--) {
+            String token = tokens[i];
             if (Expression.isNumber(token)) {
-                this.expression.stack.push(Double.parseDouble(token));
-            } else {
-                this.calculateSingleExpression(token);
+                this.expression.push(Double.parseDouble(token));
+            } else if (Expression.isOperand(token)) {
+                this.calculateSingleExpression(Operations.getOperation(token));
             }
         }
 
-        return this.expression.stack.pop();
+        return this.expression.pop();
     }
 }
