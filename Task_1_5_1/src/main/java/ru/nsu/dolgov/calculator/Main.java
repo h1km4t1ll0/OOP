@@ -53,8 +53,8 @@ public class Main {
             throw new Exception("Invalid argument!");
         }
 
-        Expression tokens = parser.parse();
-        Calculator calculator = new Calculator(tokens);
+        Expression parsedExpression = parser.parse();
+        Calculator calculator = new Calculator(parsedExpression);
         return calculator.calculate();
     }
 }
