@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":10,"i1":9,"i2":9,"i3":10,"i4":10};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -88,13 +88,13 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -132,41 +132,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">Expression</span>
 extends java.lang.Object</pre>
-<div class="block">Class for expression implementation.</div>
+<div class="block">Class for expression implementation.
+ Its purpose is to store the deque and provide an API to access it</div>
 </li>
 </ul>
 </div>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- =========== FIELD SUMMARY =========== -->
-<section>
-<ul class="blockList">
-<li class="blockList"><a id="field.summary">
-<!--   -->
-</a>
-<h3>Field Summary</h3>
-<table class="memberSummary">
-<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Field</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>java.lang.String[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#rawTokens">rawTokens</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>java.util.Deque&lt;java.lang.Double&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#stack">stack</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section>
 <ul class="blockList">
@@ -196,17 +169,45 @@ extends java.lang.Object</pre>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>java.lang.String[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRawTokens()">getRawTokens</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Getter for the tokens collected from user.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isNumber(java.lang.String)">isNumber</a></span>&#8203;(java.lang.String&nbsp;token)</code></th>
 <td class="colLast">
 <div class="block">Method to check whether token is number or not.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>static boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isOperand(java.lang.String)">isOperand</a></span>&#8203;(java.lang.String&nbsp;token)</code></th>
+<td class="colLast">
+<div class="block">Method to check whether token is operand or not.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>java.lang.Double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#pop()">pop</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Method to get the data from the internal deque.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#push(java.lang.Double)">push</a></span>&#8203;(java.lang.Double&nbsp;expression)</code></th>
+<td class="colLast">
+<div class="block">Method to push the data to an internal deque.</div>
 </td>
 </tr>
 </table>
@@ -226,34 +227,6 @@ extends java.lang.Object</pre>
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ============ FIELD DETAIL =========== -->
-<section>
-<ul class="blockList">
-<li class="blockList"><a id="field.detail">
-<!--   -->
-</a>
-<h3>Field Detail</h3>
-<a id="stack">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>stack</h4>
-<pre>public final&nbsp;java.util.Deque&lt;java.lang.Double&gt; stack</pre>
-</li>
-</ul>
-<a id="rawTokens">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>rawTokens</h4>
-<pre>public&nbsp;java.lang.String[] rawTokens</pre>
-</li>
-</ul>
-</li>
-</ul>
-</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <section>
 <ul class="blockList">
@@ -283,7 +256,7 @@ extends java.lang.Object</pre>
 <a id="isNumber(java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>isNumber</h4>
 <pre class="methodSignature">public static&nbsp;boolean&nbsp;isNumber&#8203;(java.lang.String&nbsp;token)</pre>
@@ -293,6 +266,64 @@ extends java.lang.Object</pre>
 <dd><code>token</code> - string token.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>true if number false otherwise.</dd>
+</dl>
+</li>
+</ul>
+<a id="isOperand(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isOperand</h4>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;isOperand&#8203;(java.lang.String&nbsp;token)</pre>
+<div class="block">Method to check whether token is operand or not.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>token</code> - string token.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if operand false otherwise.</dd>
+</dl>
+</li>
+</ul>
+<a id="getRawTokens()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRawTokens</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String[]&nbsp;getRawTokens()</pre>
+<div class="block">Getter for the tokens collected from user.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>String[] tokens.</dd>
+</dl>
+</li>
+</ul>
+<a id="push(java.lang.Double)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>push</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;push&#8203;(java.lang.Double&nbsp;expression)</pre>
+<div class="block">Method to push the data to an internal deque.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>expression</code> - expression to be pushed.</dd>
+</dl>
+</li>
+</ul>
+<a id="pop()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>pop</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Double&nbsp;pop()</pre>
+<div class="block">Method to get the data from the internal deque.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Double value.</dd>
 </dl>
 </li>
 </ul>
@@ -347,13 +378,13 @@ extends java.lang.Object</pre>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
