@@ -1,22 +1,38 @@
 package ru.nsu.dolgov.notebook;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 /**
  * Class for note implementation.
  */
-public class Note implements Comparable<Note>{
-    private final LocalDateTime createdAt;
-    private final UUID id;
+public class Note implements Comparable<Note> {
+    private final String creationDate;
+    private final String id;
     private final String summary;
+
     private final String content;
 
     Note(String summary, String content) {
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         this.summary = summary;
         this.content = content;
-        this.id = UUID.randomUUID();
-        this.createdAt = LocalDateTime.now();
+        this.id = UUID.randomUUID().toString();
+        this.creationDate = format.format(new java.util.Date());
+    }
+
+    Note(
+        @JsonProperty("summary") String summary,
+        @JsonProperty("content") String content,
+        @JsonProperty("creationDate") String creationDate,
+        @JsonProperty("id") String id
+    ) {
+        this.summary = summary;
+        this.content = content;
+        this.id = id;
+        this.creationDate = creationDate;
     }
 
     /**
@@ -51,12 +67,13 @@ public class Note implements Comparable<Note>{
      *
      * @return creation date.
      */
-    public LocalDateTime getCreationDate() {
-        return this.createdAt;
+    public String getCreationDate() {
+        return this.creationDate;
     }
 
     /**
      * Method to compare two notes.
+     *
      * @param o the object to be compared.
      * @return result of the comparison.
      */
