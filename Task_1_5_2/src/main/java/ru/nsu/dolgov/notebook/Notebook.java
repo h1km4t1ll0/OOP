@@ -1,8 +1,10 @@
 package ru.nsu.dolgov.notebook;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * Class for notebook implementation
@@ -19,7 +21,6 @@ public class Notebook {
     public void addNote(String summary, String content) {
         Note note = new Note(summary, content);
         notes.put(note.getId(), note);
-
     }
 
     /**
@@ -29,5 +30,14 @@ public class Notebook {
      */
     public void removeNote(String id) {
         notes.remove(id);
+    }
+
+    /**
+     * Method to get sorted notes.
+     *
+     * @return list of sorted notes.
+     */
+    public List<Note> getNotes() {
+        return this.notes.values().stream().sorted().collect(Collectors.toList());
     }
 }

@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * Class for note implementation.
  */
-public class Note {
+public class Note implements Comparable<Note>{
     private final LocalDateTime createdAt;
     private final UUID id;
     private final String summary;
@@ -47,5 +47,24 @@ public class Note {
      */
     public String getId() {
         return this.id.toString();
+    }
+
+    /**
+     * Getter fot a creation date.
+     *
+     * @return creation date.
+     */
+    public LocalDateTime getCreationDate() {
+        return this.createdAt;
+    }
+
+    /**
+     * Method to compare two notes.
+     * @param o the object to be compared.
+     * @return result of the comparison.
+     */
+    @Override
+    public int compareTo(Note o) {
+        return this.getCreationDate().compareTo(o.getCreationDate());
     }
 }
