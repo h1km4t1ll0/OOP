@@ -22,14 +22,29 @@ public class Note {
         this.createdAt = LocalDateTime.now();
     }
 
+    /**
+     * Getter fot a summary.
+     *
+     * @return summary of a note.
+     */
     public String getSummary() {
         return this.summary;
     }
 
+    /**
+     * Getter fot a content.
+     *
+     * @return content of a note.
+     */
     public String getContent() {
         return this.content;
     }
 
+    /**
+     * Getter fot an id.
+     *
+     * @return id of a note.
+     */
     public String getId() {
         return this.id.toString();
     }
