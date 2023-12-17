@@ -1,8 +1,8 @@
 package ru.nsu.dolgov.notebook;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -11,7 +11,11 @@ import java.util.stream.Collectors;
  * Class for notebook implementation
  */
 public class Notebook {
-    private final Map<String, Note> notes = new HashMap<>();
+    private final Map<String, Note> notes;
+
+    Notebook(Map<String, Note> notes) {
+        this.notes = notes;
+    }
 
     /**
      * Method to add a note.
@@ -34,6 +38,29 @@ public class Notebook {
     }
 
     /**
+     * Method to get an ID by summary.
+     *
+     * @param summary keywords to search in summary.
+     * @return id of a note.
+     */
+    public String getIdBySummary(String summary) {
+        return this.notes.values().stream().filter(
+                (each) -> each.getSummary()
+                        .toLowerCase()
+                        .contains(summary.toLowerCase())
+        ).collect(Collectors.toList()).get(0).getId();
+    }
+
+    /**
+     * Method to get a map of notes.
+     *
+     * @return map of notes.
+     */
+    public Map<String, Note> getNotesMap() {
+        return this.notes;
+    }
+
+    /**
      * Method to get sorted notes.
      *
      * @return list of sorted notes.
@@ -48,18 +75,29 @@ public class Notebook {
      * @return list of notes.
      */
     public List<Note> getNotes(
-        LocalDateTime from,
-        LocalDateTime to,
-        ArrayList<String> keyWords
+        Date from,
+        Date to,
+        List<String> keyWords
     ) {
-        return this.notes.values().stream().filter(
-            (each) -> each.getCreationDate().isBefore(to)
-                    && each.getCreationDate().isAfter(from)
-                    && keyWords.stream().anyMatch(
-                    (keyWord) -> each.getSummary()
-                            .toLowerCase()
-                            .contains(keyWord.toLowerCase())
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        return this.notes.values()
+            .stream()
+            .filter(
+                (each) -> {
+                    try {
+                        return format.parse(each.getCreationDate()).before(to)
+                            && format.parse(each.getCreationDate()).after(from)
+                            && keyWords.stream().anyMatch(
+                            (keyWord) -> each.getSummary()
+                                .toLowerCase()
+                                .contains(keyWord.toLowerCase())
+                        );
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             )
-        ).collect(Collectors.toList());
+            .sorted()
+            .collect(Collectors.toList());
     }
 }
