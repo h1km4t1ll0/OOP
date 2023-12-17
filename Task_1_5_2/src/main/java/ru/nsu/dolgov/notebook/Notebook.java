@@ -48,18 +48,18 @@ public class Notebook {
      * @return list of notes.
      */
     public List<Note> getNotes(
-            LocalDateTime from,
-            LocalDateTime to,
-            ArrayList<String> keyWords
+        LocalDateTime from,
+        LocalDateTime to,
+        ArrayList<String> keyWords
     ) {
         return this.notes.values().stream().filter(
-                (each) -> each.getCreationDate().isBefore(to)
-                        && each.getCreationDate().isAfter(from)
-                        && keyWords.stream().anyMatch(
-                        (keyWord) -> each.getSummary()
-                                .toLowerCase()
-                                .contains(keyWord.toLowerCase())
-                )
+            (each) -> each.getCreationDate().isBefore(to)
+                    && each.getCreationDate().isAfter(from)
+                    && keyWords.stream().anyMatch(
+                    (keyWord) -> each.getSummary()
+                            .toLowerCase()
+                            .contains(keyWord.toLowerCase())
+            )
         ).collect(Collectors.toList());
     }
 }
