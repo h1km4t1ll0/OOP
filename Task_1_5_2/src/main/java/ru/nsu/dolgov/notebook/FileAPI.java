@@ -1,15 +1,14 @@
 package ru.nsu.dolgov.notebook;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -33,7 +32,7 @@ public class FileAPI {
         ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
         writer.writeValue(
             new File(this.filename),
-            new ObjectMapper().writeValueAsString(payload)
+            payload
         );
     }
 
@@ -45,6 +44,13 @@ public class FileAPI {
      */
     public Map<String, Note> deserialize() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(new File(this.filename), new TypeReference<>(){});
+
+        try {
+            return mapper.readValue(new File(this.filename), new TypeReference<>(){});
+        } catch (FileNotFoundException e) {
+            File file = new File(this.filename);
+            file.createNewFile();
+            return new HashMap<>();
+        }
     }
 }
