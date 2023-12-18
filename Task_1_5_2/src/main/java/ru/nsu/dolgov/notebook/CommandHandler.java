@@ -60,11 +60,11 @@ public class CommandHandler {
             return "Invalid number of arguments!";
         }
 
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         List<Note> notes = notebook.getNotes(
                 format.parse(arguments.get(0)),
                 format.parse(arguments.get(1)),
-                arguments.subList(2, arguments.size() - 1)
+                arguments.subList(2, arguments.size())
         );
 
         notes.forEach(
