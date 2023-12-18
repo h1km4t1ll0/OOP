@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Class for notebook implementation
+ * Class for notebook implementation.
  */
 public class Notebook {
     private final Map<String, Note> notes;
@@ -88,9 +88,9 @@ public class Notebook {
                         return format.parse(each.getCreationDate()).before(to)
                             && format.parse(each.getCreationDate()).after(from)
                             && keyWords.stream().anyMatch(
-                            (keyWord) -> each.getSummary()
-                                .toLowerCase()
-                                .contains(keyWord.toLowerCase())
+                                (keyWord) -> each.getSummary()
+                                    .toLowerCase()
+                                    .contains(keyWord.toLowerCase())
                         );
                     } catch (ParseException e) {
                         throw new RuntimeException(e);
