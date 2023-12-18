@@ -79,7 +79,7 @@ public class Notebook {
         Date to,
         List<String> keyWords
     ) {
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         return this.notes.values()
             .stream()
             .filter(

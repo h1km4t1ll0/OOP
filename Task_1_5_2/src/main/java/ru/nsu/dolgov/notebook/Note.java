@@ -16,7 +16,7 @@ public class Note implements Comparable<Note> {
     private final String content;
 
     Note(String summary, String content) {
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         this.summary = summary;
         this.content = content;
         this.id = UUID.randomUUID().toString();
