@@ -2,7 +2,6 @@ package ru.nsu.dolgov.notebook;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,8 +43,7 @@ public class Main {
      */
     public void handleArguments(String[] args) throws IOException, ParseException {
         CmdLineParser parser = new CmdLineParser(this);
-        FileAPI fileAPI = new FileAPI("notes.json");
-        Notebook notebook = new Notebook(fileAPI.deserialize());
+        CommandHandler commandHandler = new CommandHandler();
 
         try {
             parser.parseArgument(args);
@@ -58,65 +56,17 @@ public class Main {
 
         if (addCommand) {
             addCommand = false;
-
-            if (arguments.size() > 2) {
-                System.out.println("Too many arguments!");
-                return;
-            }
-
-            if (arguments.size() < 2) {
-                System.out.println("Too little arguments!");
-                return;
-            }
-
-            notebook.addNote(arguments.get(0), arguments.get(1));
-            fileAPI.serialize(notebook.getNotesMap());
-            return;
+            System.out.println(commandHandler.addCommand(arguments));
         }
 
         if (showCommand) {
             showCommand = false;
-
-            if (arguments.isEmpty()) {
-                List<Note> notes = notebook.getNotes();
-                notes.forEach(
-                        (each) -> {
-                            System.out.println("Summary: " + each.getSummary());
-                            System.out.println("Content: " + each.getContent());
-                            System.out.println();
-                        }
-                );
-                return;
-            }
-
-            if (arguments.size() < 3) {
-                System.out.println("Invalid number of arguments!");
-                return;
-            }
-
-
-            SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
-            List<Note> notes = notebook.getNotes(
-                format.parse(arguments.get(0)),
-                format.parse(arguments.get(1)),
-                arguments.subList(2, arguments.size() - 1)
-            );
-
-            notes.forEach(
-                    (each) -> {
-                        System.out.println("Summary: " + each.getSummary());
-                        System.out.println("Content: " + each.getContent());
-                        System.out.println();
-                    }
-            );
-            return;
+            System.out.println(commandHandler.showCommand(arguments));
         }
 
         if (rmCommand) {
             rmCommand = false;
-
-            notebook.removeNote(notebook.getIdBySummary(arguments.get(0)));
-            fileAPI.serialize(notebook.getNotesMap());
+            System.out.println(commandHandler.removeCommand(arguments));
         }
     }
 }
