@@ -9,12 +9,12 @@ import java.util.List;
  * Class for command handling.
  */
 public class CommandHandler {
-    private final FileAPI fileAPI;
+    private final FileAPI fileApi;
     private final Notebook notebook;
 
     CommandHandler() throws IOException {
-        this.fileAPI = new FileAPI("notes.json");
-        this.notebook = new Notebook(fileAPI.deserialize());
+        this.fileApi = new FileAPI("notes.json");
+        this.notebook = new Notebook(fileApi.deserialize());
     }
 
     /**
@@ -30,7 +30,7 @@ public class CommandHandler {
         }
 
         notebook.addNote(arguments.get(0), arguments.get(1));
-        fileAPI.serialize(notebook.getNotesMap());
+        fileApi.serialize(notebook.getNotesMap());
         return "Created!";
     }
 
@@ -87,7 +87,7 @@ public class CommandHandler {
      */
     public String removeCommand(List<String> arguments) throws IOException {
         notebook.removeNote(notebook.getIdBySummary(arguments.get(0)));
-        fileAPI.serialize(notebook.getNotesMap());
+        fileApi.serialize(notebook.getNotesMap());
         return "Removed!\n";
     }
 }

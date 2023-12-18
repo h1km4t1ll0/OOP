@@ -1,7 +1,6 @@
 package ru.nsu.dolgov.notebook;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
@@ -16,10 +15,10 @@ public class Note implements Comparable<Note> {
     private final String content;
 
     Note(String summary, String content) {
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         this.summary = summary;
         this.content = content;
         this.id = UUID.randomUUID().toString();
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         this.creationDate = format.format(new java.util.Date());
     }
 
