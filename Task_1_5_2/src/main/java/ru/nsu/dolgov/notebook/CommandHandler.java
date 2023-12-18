@@ -9,11 +9,11 @@ import java.util.List;
  * Class for command handling.
  */
 public class CommandHandler {
-    private final FileAPI fileApi;
+    private final FileApi fileApi;
     private final Notebook notebook;
 
     CommandHandler() throws IOException {
-        this.fileApi = new FileAPI("notes.json");
+        this.fileApi = new FileApi("notes.json");
         this.notebook = new Notebook(fileApi.deserialize());
     }
 

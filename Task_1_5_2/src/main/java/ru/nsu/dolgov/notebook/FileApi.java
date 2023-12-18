@@ -13,10 +13,10 @@ import java.util.Map;
 /**
  * Class to implement work with a .json file.
  */
-public class FileAPI {
+public class FileApi {
     private final String filename;
 
-    FileAPI(String filename) {
+    FileApi(String filename) {
         this.filename = filename;
     }
 

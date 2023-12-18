@@ -12,8 +12,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Class for Notebook class test.
@@ -21,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class NotebookTest {
     private Map<String, Note> noteMap;
     private Notebook notebook;
-    private FileAPI fileApi;
+    private FileApi fileApi;
 
     @AfterEach
     void cleanUp() throws IOException {
@@ -33,7 +34,7 @@ public class NotebookTest {
         Main.main(new String[]{"-add", "Summary4", "someData"});
         Main.main(new String[]{"-add", "Summary6", "someData3"});
         Main.main(new String[]{"-add", "Summary5", "someData2"});
-        this.fileApi = new FileAPI("notes.json");
+        this.fileApi = new FileApi("notes.json");
         this.noteMap = fileApi.deserialize();
         this.notebook = new Notebook(noteMap);
     }
