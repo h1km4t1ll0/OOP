@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ru.nsu.dolgov.notprimefinder"},{"l":"ru.nsu.dolgov.notprimefinder.drawer"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"ru.nsu.dolgov.notprimefinder"}];updateSearchResults();
