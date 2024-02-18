@@ -1,11 +1,11 @@
 package ru.nsu.dolgov.notprimefinder;
 
 
+import java.io.IOException;
+import java.util.Arrays;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.jupiter.api.Test;
-import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Class for Drawer class test.
