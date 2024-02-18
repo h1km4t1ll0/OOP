@@ -1,4 +1,4 @@
-package ru.nsu.dolgov.notprimefinder.drawer;
+package ru.nsu.dolgov.notprimefinder;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtils;

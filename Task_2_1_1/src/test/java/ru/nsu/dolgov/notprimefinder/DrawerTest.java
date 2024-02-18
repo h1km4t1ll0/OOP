@@ -4,8 +4,6 @@ package ru.nsu.dolgov.notprimefinder;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.junit.jupiter.api.Test;
-import ru.nsu.dolgov.notprimefinder.drawer.Drawer;
-
 import java.io.IOException;
 import java.util.Arrays;
 
