@@ -4,7 +4,7 @@ package ru.nsu.dolgov.notprimefinder;
 /**
  * Not prime numbers finder implementation with simple cycle.
  */
-public class NonPrimeLinearChecker extends NonPrime implements Checker {
+public class NonPrimeLinearChecker extends NonPrimeChecker implements Checker {
     /**
      * An override for check method in the Checker interface.
      *

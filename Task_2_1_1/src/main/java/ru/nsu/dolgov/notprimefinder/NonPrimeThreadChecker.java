@@ -1,21 +1,18 @@
 package ru.nsu.dolgov.notprimefinder;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 /**
  * Not prime numbers finder implementation with thread-pool.
  */
-public class NonPrimeThreadChecker extends NonPrime implements Checker {
+public class NonPrimeThreadChecker extends NonPrimeChecker implements Checker {
     private final int threadQuantity;
-    private BlockingQueue<Integer> numbers;
     private ExecutorService threadPool;
-    private List<Callable<Boolean>> tasksToExecute;
+    private List<Future<Boolean>> futures;
+    // Шатдаун флаг, чтобы потоки знали, что пора сворачиваться.
+    private volatile Boolean shutdownFlag = false;
 
     /**
      * NonPrimeThread will use the number of threads equal
@@ -39,37 +36,63 @@ public class NonPrimeThreadChecker extends NonPrime implements Checker {
      *
      * @return task to execute.
      */
-    private Callable<Boolean> taskFactory() {
-        return () -> {
-            Integer nextNumber = this.numbers.poll();
-            while (nextNumber != null) {
-                if (!isPrime(nextNumber)) {
-                    return true;
-                }
-                nextNumber = this.numbers.poll();
+    private Boolean taskFactory(int[] numbers) {
+        for (var each : numbers) {
+            if (Thread.currentThread().isInterrupted()) {
+                return false;
             }
-            return false;
-        };
+            if (this.shutdownFlag) {
+                return false;
+            }
+            if (!isPrime(each)) {
+                this.shutdownFlag = true;
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
-     * Method to init blocking queue to store numbers
-     * and to create a thread-pool.
+     * Gets partial array of integers to proceed.
+     *
+     * @param origin original array.
+     * @param from start of new array.
+     * @param length length of result array.
+     * @return partial array.
+     */
+    private int[] getPartialArray(int[] origin, int from, int length) {
+        int[] partialArray = new int[length];
+        System.arraycopy(origin, from, partialArray, 0, length);
+        return partialArray;
+    }
+
+    /**
+     * Method to init tasks to execute.
      *
      * @param array array of numbers to proceed.
      */
     private void prepare(int[] array) {
-        this.numbers = new ArrayBlockingQueue<>(array.length);
-
-        for (int each : array) {
-            this.numbers.add(each);
-        }
-
         this.threadPool = Executors.newFixedThreadPool(this.threadQuantity);
-
-        this.tasksToExecute = new java.util.ArrayList<>();
+        int batchSize = array.length / this.threadQuantity;
+        this.futures = new ArrayList<>();
         for (int i = 0; i < this.threadQuantity; i++) {
-            tasksToExecute.add(this.taskFactory());
+            int length = (i + 1) * batchSize;
+            if (i + 1 == this.threadQuantity) {
+                length = array.length;
+            }
+            int from = i * batchSize;
+            int finalLength = length - from;
+            this.futures.add(
+                this.threadPool.submit(
+                    () -> this.taskFactory(
+                        this.getPartialArray(
+                            array,
+                            from,
+                            finalLength
+                        )
+                    )
+                )
+            );
         }
     }
 
@@ -80,20 +103,20 @@ public class NonPrimeThreadChecker extends NonPrime implements Checker {
      * @return true if array includes at least one not prime number.
      */
     @Override
-    public boolean check(int[] array) throws InterruptedException {
-        this.prepare(array);
-        return this.threadPool.invokeAll(
-            this.tasksToExecute
-        ).stream().anyMatch(
-            executedTaskValue -> {
-                try {
-                    return executedTaskValue.get();
-                } catch (InterruptedException | ExecutionException e) {
-                    throw new RuntimeException(e);
-                } finally {
-                    this.threadPool.shutdownNow();
+    public boolean check(int[] array) {
+        try {
+            this.prepare(array);
+            for (Future<Boolean> result : this.futures) {
+                if (result.get()) {
+                    this.shutdownFlag = true;
+                    return true;
                 }
             }
-        );
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        } finally {
+            this.threadPool.shutdownNow();
+        }
+        return false;
     }
 }

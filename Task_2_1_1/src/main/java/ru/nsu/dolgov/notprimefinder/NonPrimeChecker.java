@@ -3,7 +3,7 @@ package ru.nsu.dolgov.notprimefinder;
 /**
  * Simple finder of not prime numbers.
  */
-public abstract class NonPrime implements Checker {
+public abstract class NonPrimeChecker implements Checker {
     /**
      * Method to check whether number is prime or not.
      *

@@ -12,21 +12,21 @@ import org.junit.jupiter.api.Test;
 public class NonPrimeTest {
     @Test
     void testSmallNumberTrue() {
-        assertTrue(NonPrime.isPrime(11));
+        assertTrue(NonPrimeChecker.isPrime(11));
     }
 
     @Test
     void testSmallNumberFalse() {
-        assertFalse(NonPrime.isPrime(9));
+        assertFalse(NonPrimeChecker.isPrime(9));
     }
 
     @Test
     void testBigNumberFalse() {
-        assertTrue(NonPrime.isPrime(568713463));
+        assertTrue(NonPrimeChecker.isPrime(568713463));
     }
 
     @Test
     void testBigNumberTrue() {
-        assertFalse(NonPrime.isPrime(568713467));
+        assertFalse(NonPrimeChecker.isPrime(568713467));
     }
 }

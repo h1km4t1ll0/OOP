@@ -32,7 +32,7 @@ public class DrawerTest {
      * @return Average time to do the equation.
      * @throws InterruptedException if the current thread was interrupted.
      */
-    private long getAverageTime(NonPrime nonPrimeChecker, int[] array) throws InterruptedException {
+    private long getAverageTime(NonPrimeChecker nonPrimeChecker, int[] array) throws InterruptedException {
         long time = 0;
 
         for (int i = 0; i < 3; ++i) {
@@ -62,6 +62,7 @@ public class DrawerTest {
         XYSeries threaded16Series = new XYSeries("16 потоков");
         XYSeries threaded32Series = new XYSeries("32 потока");
         XYSeries threaded64Series = new XYSeries("64 потока");
+        XYSeries threaded512Series = new XYSeries("512 потоков");
         XYSeries streamSeries = new XYSeries("Параллельный стрим");
 
         for (int sizeOfArray = 40; sizeOfArray <= 4000000; sizeOfArray *= 10) {
@@ -73,6 +74,7 @@ public class DrawerTest {
             threaded16Series.add(sizeOfArray, getAverageTime(new NonPrimeThreadChecker(16), array));
             threaded32Series.add(sizeOfArray, getAverageTime(new NonPrimeThreadChecker(32), array));
             threaded64Series.add(sizeOfArray, getAverageTime(new NonPrimeThreadChecker(64), array));
+            threaded512Series.add(sizeOfArray, getAverageTime(new NonPrimeThreadChecker(512), array));
             streamSeries.add(sizeOfArray, getAverageTime(new NonPrimeStreamChecker(), array));
             System.out.println(sizeOfArray);
         }
@@ -84,6 +86,7 @@ public class DrawerTest {
         dataset.addSeries(threaded16Series);
         dataset.addSeries(threaded32Series);
         dataset.addSeries(threaded64Series);
+        dataset.addSeries(threaded512Series);
         dataset.addSeries(streamSeries);
         Drawer drawer = new Drawer(dataset);
         drawer.createFile();

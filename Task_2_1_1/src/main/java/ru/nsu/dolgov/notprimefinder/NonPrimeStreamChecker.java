@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Not prime numbers finder implementation with stream API.
  */
-public class NonPrimeStreamChecker extends NonPrime implements Checker {
+public class NonPrimeStreamChecker extends NonPrimeChecker implements Checker {
     /**
      * An override for check method in the Checker interface.
      *
