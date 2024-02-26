@@ -2,7 +2,10 @@ package ru.nsu.dolgov.notprimefinder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * Not prime numbers finder implementation with thread-pool.
