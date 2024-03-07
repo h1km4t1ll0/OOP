@@ -1,0 +1,15 @@
+{
+  "deliverers": {
+    "quantity": 10,
+    "capacity": 2
+  },
+  "warehouse": {
+    "capacity": 20
+  },
+  "bakers": {
+    "quantity": 4
+  },
+  "bakery": {
+    "durationOfTheDayInSeconds": 60
+  }
+}
