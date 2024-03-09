@@ -1,4 +1,4 @@
-package ru.nsu.dolgov.pizzeria.service.entities;
+package ru.nsu.dolgov.pizzeria.service.entities.pureentities;
 
 import ru.nsu.dolgov.pizzeria.service.Utils;
 import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueue;
@@ -6,11 +6,15 @@ import ru.nsu.dolgov.pizzeria.service.interfaces.Employee;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import static ru.nsu.dolgov.pizzeria.service.Utils.getUUID;
 
 public class Deliverer implements Employee {
     private final int capacity;
     private final int efficiency;
     private final int dayDuration;
+    public final UUID employeeUUID;
     private final BlockingQueue<Order> deliveryQueue;
     private final BlockingQueue<Order> doneQueue;
 
@@ -21,11 +25,17 @@ public class Deliverer implements Employee {
             BlockingQueue<Order> doneQueue,
             int dayDuration
     ) {
+        this.employeeUUID = getUUID();
         this.capacity = capacity;
         this.efficiency = efficiency;
         this.deliveryQueue = deliveryQueue;
         this.doneQueue = doneQueue;
         this.dayDuration = dayDuration;
+    }
+
+    @Override
+    public UUID getEmployeeUUID() {
+        return this.employeeUUID;
     }
 
     @Override
@@ -57,21 +67,18 @@ public class Deliverer implements Employee {
     public void startConsuming() {
         while (!Thread.interrupted()) {
             List<Order> orders = this.getOrders(this.capacity);
+            orders.forEach((order -> Employee.changeStateOfOrder(order, OrderState.DELIVERING)));
             this.consumeOrder();
+            orders.forEach((order -> Employee.changeStateOfOrder(order, OrderState.DONE)));
             this.putOrders(orders);
         }
-    }
-
-    @Override
-    public void changeStateOfOrder(Order order, OrderState newState) {
-        order.setState(newState);
     }
 
     @Override
     public void consumeOrder() {
         try {
             Thread.sleep(
-                    Utils.getRandomDuration(1, this.dayDuration) / this.efficiency
+                Utils.getRandomNumberFromRange(1, this.dayDuration) / this.efficiency
             );
         } catch (InterruptedException e) {
             System.out.println("Deliverer thread was interrupted!");
