@@ -1,7 +1,7 @@
 package ru.nsu.dolgov.pizzeria.service.queues;
 
 public record QueueLocator(
-        BaseQueue waitingQueue,
-        BaseQueue deliveryQueue,
-        BaseQueue doneQueue
+    BaseQueue waitingQueue,
+    BaseQueue deliveryQueue,
+    BaseQueue doneQueue
 ) {}

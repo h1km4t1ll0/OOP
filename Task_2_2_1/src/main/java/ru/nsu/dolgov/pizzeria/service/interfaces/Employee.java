@@ -1,5 +1,6 @@
 package ru.nsu.dolgov.pizzeria.service.interfaces;
 
+import org.jetbrains.annotations.NotNull;
 import ru.nsu.dolgov.pizzeria.service.entities.pureentities.Order;
 import ru.nsu.dolgov.pizzeria.service.entities.pureentities.OrderState;
 
@@ -15,7 +16,7 @@ public interface Employee {
     Order getOrder();
     void putOrder(Order order);
     void startConsuming();
-    static void changeStateOfOrder(Order order, OrderState newState) {
+    static void changeStateOfOrder(@NotNull Order order, @NotNull OrderState newState) {
         String currentTime = new SimpleDateFormat("HH:mm:ss.SSS").format(new Date());
         System.out.printf(
             "%s[%s][%s]%s Order state changed %s%s%s -> %s",
