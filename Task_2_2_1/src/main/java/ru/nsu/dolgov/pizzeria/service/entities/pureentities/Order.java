@@ -1,13 +1,15 @@
-package ru.nsu.dolgov.pizzeria.service.entities;
+package ru.nsu.dolgov.pizzeria.service.entities.pureentities;
 
 import java.util.UUID;
 
+import static ru.nsu.dolgov.pizzeria.service.Utils.getUUID;
+
 public class Order {
-    private UUID id;
+    private final UUID id;
     private OrderState state;
 
     public Order() {
-        this.id = UUID.randomUUID();
+        this.id = getUUID();
         this.state = OrderState.WAITING;
     }
 
@@ -16,5 +18,9 @@ public class Order {
     }
     public OrderState getState() {
         return this.state;
+    }
+
+    public UUID getId() {
+        return id;
     }
 }
