@@ -25,6 +25,8 @@ public class ParserTest {
 
         assertNotNull(config);
         assertEquals(60, config.bakery.durationOfTheDayInSeconds);
+        assertEquals(20, config.bakery.deliveryQueueCapacity);
+        assertEquals(20, config.bakery.waitingQueueCapacity);
         assertEquals(2, config.deliverers.capacity);
         assertEquals(10, config.deliverers.quantity);
         assertEquals(20, config.warehouse.capacity);
