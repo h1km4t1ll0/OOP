@@ -1,6 +1,6 @@
 package ru.nsu.dolgov.pizzeria.service.queues;
 
-import ru.nsu.dolgov.pizzeria.service.entities.Order;
+import ru.nsu.dolgov.pizzeria.service.entities.pureentities.Order;
 import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueue;
 
 import java.util.ArrayDeque;
@@ -8,7 +8,7 @@ import java.util.Deque;
 
 public class BaseQueue implements BlockingQueue<Order> {
     private final int capacity;
-    private Deque<Order> orders;
+    private final Deque<Order> orders;
 
     public BaseQueue(int capacity) {
         this.capacity = capacity;
