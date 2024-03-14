@@ -1,7 +1,12 @@
 package ru.nsu.dolgov.pizzeria.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
+
+import static ru.nsu.dolgov.pizzeria.service.Utils.Colors.*;
+import static ru.nsu.dolgov.pizzeria.service.Utils.Colors.RESET;
 
 public class Utils {
     public static int getRandomNumberFromRange(int from, int to) {
@@ -84,5 +89,22 @@ public class Utils {
         public static final String PURPLE_BACKGROUND_BRIGHT = "\033[0;105m"; // PURPLE
         public static final String CYAN_BACKGROUND_BRIGHT = "\033[0;106m";  // CYAN
         public static final String WHITE_BACKGROUND_BRIGHT = "\033[0;107m";   // WHITE
+    }
+    public enum LogLevel {
+        ERROR, INFO, WARNING
+    }
+    public static void log(LogLevel level, String message) {
+        String currentTime = new SimpleDateFormat("HH:mm:ss.SSS").format(new Date());
+        String firstColorToken = RED;
+        switch (level) {
+            case INFO -> firstColorToken = BLUE;
+            case ERROR -> firstColorToken = RED;
+            case WARNING -> firstColorToken = YELLOW;
+        }
+        System.out.printf(
+            "%s[%s]%s %s%s%s\n",
+            YELLOW_BOLD_BRIGHT, currentTime, RESET,
+            firstColorToken, message, RESET
+        );
     }
 }
