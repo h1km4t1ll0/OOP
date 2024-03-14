@@ -1,17 +1,20 @@
 {
   "deliverers": {
-    "quantity": 10,
+    "quantity": 1,
     "capacity": 2
   },
   "warehouse": {
     "capacity": 20
   },
   "bakers": {
-    "quantity": 4
+    "quantity": 1
   },
   "bakery": {
-    "durationOfTheDayInSeconds": 60,
+    "durationOfTheDayInSeconds": 10,
     "deliveryQueueCapacity": 20,
     "waitingQueueCapacity": 20
+  },
+  "orders": {
+    "quantity": 100
   }
 }
