@@ -1,9 +1,11 @@
 package ru.nsu.dolgov.pizzeria.service.interfaces;
 
 
+import java.util.Deque;
+
 public interface BlockingQueue<T> {
-    public T get();
-    public void put(T item);
-    public int getCapacity();
+    public T get() throws InterruptedException;
+    public void put(T item) throws InterruptedException;
     public boolean isEmpty();
+    public Deque<T> getDump();
 }

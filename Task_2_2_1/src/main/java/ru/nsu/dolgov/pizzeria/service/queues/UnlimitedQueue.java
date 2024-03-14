@@ -6,12 +6,10 @@ import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueue;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class BaseQueue implements BlockingQueue<Order> {
-    private final int capacity;
+public class UnlimitedQueue implements BlockingQueue<Order> {
     private final Deque<Order> orders;
 
-    public BaseQueue(int capacity) {
-        this.capacity = capacity;
+    public UnlimitedQueue() {
         this.orders = new ArrayDeque<>();
     }
 
@@ -25,16 +23,8 @@ public class BaseQueue implements BlockingQueue<Order> {
     }
 
     @Override
-    public synchronized void put(Order item) throws InterruptedException {
-        while (this.orders.size() == this.capacity) {
-            wait();
-        }
+    public synchronized void put(Order item) {
         this.orders.push(item);
-        notifyAll();
-    }
-
-    public int getCapacity() {
-        return this.capacity;
     }
 
     @Override
