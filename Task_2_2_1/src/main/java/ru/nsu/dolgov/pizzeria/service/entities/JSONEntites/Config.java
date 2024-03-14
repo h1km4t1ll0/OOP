@@ -5,4 +5,5 @@ public class Config {
     public Warehouse warehouse;
     public Bakers bakers;
     public Bakery bakery;
+    public Orders orders;
 }

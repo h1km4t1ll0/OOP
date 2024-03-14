@@ -1,7 +1,7 @@
 package ru.nsu.dolgov.pizzeria;
 
 import org.junit.jupiter.api.Test;
-import ru.nsu.dolgov.pizzeria.service.init.Parser;
+import ru.nsu.dolgov.pizzeria.service.init.FileAPI;
 
 import java.lang.reflect.Field;
 
@@ -11,7 +11,7 @@ public class ParserTest {
 
     @Test
     void testConstructor() throws NoSuchFieldException, IllegalAccessException {
-        Parser parser = new Parser("config.json");
+        FileAPI parser = new FileAPI("config.json");
         Field field = parser.getClass().getDeclaredField("filename");
         field.setAccessible(true);
         Object value = field.get(parser);
@@ -20,7 +20,7 @@ public class ParserTest {
 
     @Test
     void testParseMethod() {
-        Parser parser = new Parser("config.json");
+        FileAPI parser = new FileAPI("config.json");
         var config = parser.parse();
 
         assertNotNull(config);
