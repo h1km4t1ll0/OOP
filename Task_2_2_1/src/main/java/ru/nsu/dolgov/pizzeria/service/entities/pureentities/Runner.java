@@ -1,10 +1,13 @@
 package ru.nsu.dolgov.pizzeria.service.entities.pureentities;
 
 import ru.nsu.dolgov.pizzeria.service.Utils.LogLevel;
+import ru.nsu.dolgov.pizzeria.service.init.FileAPI;
 import ru.nsu.dolgov.pizzeria.service.init.Init;
 import ru.nsu.dolgov.pizzeria.service.interfaces.BaseConsumerI;
 import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueueI;
 import ru.nsu.dolgov.pizzeria.service.interfaces.EmployeeI;
+import ru.nsu.dolgov.pizzeria.service.queues.BaseQueue;
+import ru.nsu.dolgov.pizzeria.service.queues.UnlimitedQueue;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -70,6 +73,29 @@ public class Runner extends Thread {
         }
     }
 
+    private void createDumpOfOrders() {
+        FileAPI dumpFileAPI = this.initializer.getDumpfileAPI();
+        Map<String, Deque<Order>> payload = new HashMap<>();
+        BlockingQueueI<Order> waitingQueue = this.initializer.getQueueLocator().waitingQueue();
+        BlockingQueueI<Order> deliveryQueue = this.initializer.getQueueLocator().deliveryQueue();
+        BlockingQueueI<Order> pendingWaitingQueue = this.initializer.getQueueLocator().pendingWaitingQueue();
+        BlockingQueueI<Order> pendingDeliveryQueue = this.initializer.getQueueLocator().pendingDeliveryQueue();
+
+        if (!waitingQueue.isEmpty()) {
+            payload.put("waitingQueue", waitingQueue.getDump());
+        }
+        if (!deliveryQueue.isEmpty()) {
+            payload.put("deliveryQueue", deliveryQueue.getDump());
+        }
+        if (!pendingWaitingQueue.isEmpty()) {
+            payload.put("pendingWaitingQueue", pendingWaitingQueue.getDump());
+        }
+        if (!pendingDeliveryQueue.isEmpty()) {
+            payload.put("pendingDeliveryQueue", pendingDeliveryQueue.getDump());
+        }
+        dumpFileAPI.serialize(payload);
+    }
+
     @Override
     public void run() {
         this.runTasks();
@@ -91,18 +117,14 @@ public class Runner extends Thread {
         this.waitForCleanup();
         log(
             LogLevel.INFO,
-            "All threads have done the cleanup. Exiting.",
+            "All threads have done the cleanup. Waiting till th dump is complete...",
             "runner"
         );
-        BlockingQueueI<Order> waitingQueue = this.initializer.getQueueLocator().waitingQueue();
-        BlockingQueueI<Order> deliveryQueue = this.initializer.getQueueLocator().deliveryQueue();
-        BlockingQueueI<Order> doneQueue = this.initializer.getQueueLocator().doneQueue();
-        BlockingQueueI<Order> pendingWaitingQueue = initializer.getQueueLocator().pendingWaitingQueue();
-        BlockingQueueI<Order> pendingDeliveryQueue = this.initializer.getQueueLocator().pendingDeliveryQueue();
-        System.out.println(waitingQueue.getDump().size());
-        System.out.println(deliveryQueue.getDump().size());
-        System.out.println(pendingWaitingQueue.getDump().size());
-        System.out.println(pendingDeliveryQueue.getDump().size());
-        System.out.println(doneQueue.getDump().size());
+        this.createDumpOfOrders();
+        log(
+            LogLevel.INFO,
+            "The dump is complete. Exiting.",
+            "runner"
+        );
     }
 }
