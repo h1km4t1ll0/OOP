@@ -13,6 +13,11 @@ public class Order {
         this.state = OrderState.WAITING;
     }
 
+    public Order(UUID id, OrderState state) {
+        this.id = id;
+        this.state = state;
+    }
+
     public void setState(OrderState newState) {
         this.state = newState;
     }
