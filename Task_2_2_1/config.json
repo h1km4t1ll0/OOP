@@ -10,8 +10,8 @@
     "quantity": 4
   },
   "customers": {
-    "quantity": 4,
-    "quantityOfOrders": 30
+    "quantity": 14,
+    "quantityOfOrders": 300
   },
   "bakery": {
     "durationOfTheDayInSeconds": 20,
