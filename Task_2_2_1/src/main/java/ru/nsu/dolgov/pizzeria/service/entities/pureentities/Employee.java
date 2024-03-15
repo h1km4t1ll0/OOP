@@ -9,6 +9,9 @@ import java.util.UUID;
 
 import static ru.nsu.dolgov.pizzeria.service.Utils.getUUID;
 
+/**
+ * A class to implement base methods of Employee entity.
+ */
 public abstract class Employee implements EmployeeI {
     private final int efficiency;
     private final int dayDuration;
@@ -32,27 +35,54 @@ public abstract class Employee implements EmployeeI {
         this.pendingSourceQueue = pendingSourceQueue;
     }
 
+    /**
+     * An UUID getter.
+     *
+     * @return current employees' id.
+     */
     @Override
     public UUID getEmployeeUUID() {
         return this.employeeUUID;
     }
 
+    /**
+     * Method to get order to proceed.
+     *
+     * @return taken order.
+     * @throws InterruptedException when the bakery is closed.
+     */
     @Override
     public Order getOrder() throws InterruptedException {
         return this.sourceQueue.get();
     }
 
+    /**
+     * Method to propagate the order.
+     *
+     * @param order order to propagate.
+     * @throws InterruptedException when the bakery is closed.
+     */
     @Override
     public void putOrder(Order order) throws InterruptedException {
         this.destinationQueue.put(order);
     }
 
+    /**
+     * Method to dump the order when the bakery is closed.
+     *
+     * @param order order to dump.
+     */
     public void dumpOrder(Order order) {
         if (order != null) {
             this.pendingSourceQueue.put(order);
         }
     }
 
+    /**
+     * Implementation of the employees' work.
+     *
+     * @throws InterruptedException when the bakery is closed.
+     */
     @Override
     public void consumeOrder() throws InterruptedException {
         long sleepDuration = (Utils.getRandomNumberFromRange(1, this.dayDuration) / this.efficiency) * 1000L;

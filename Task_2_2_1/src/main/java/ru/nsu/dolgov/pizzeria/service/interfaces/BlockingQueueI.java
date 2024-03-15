@@ -1,11 +1,18 @@
 package ru.nsu.dolgov.pizzeria.service.interfaces;
 
-
 import java.util.Deque;
 
+/**
+ * An interface for the blocking queue.
+ *
+ * @param <T> parameter for the item in the queue
+ */
 public interface BlockingQueueI<T> {
-    public T get() throws InterruptedException;
-    public void put(T item) throws InterruptedException;
-    public boolean isEmpty();
-    public Deque<T> getDump();
+    T get() throws InterruptedException;
+
+    void put(T item) throws InterruptedException;
+
+    boolean isEmpty();
+
+    Deque<T> getDump();
 }

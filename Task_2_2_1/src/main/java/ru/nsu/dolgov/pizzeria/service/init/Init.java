@@ -21,6 +21,7 @@ public class Init {
     private final FileAPI dumpfileAPI;
     private final QueueLocator queueLocator;
     private final Orders previousOrders;
+
     public Init(String configurationFile, String dumpFile) {
         this.configuration = new FileAPI(configurationFile).parse();
         this.dumpfileAPI = new FileAPI(dumpFile);
@@ -32,13 +33,13 @@ public class Init {
         Bakers bakersConfiguration = this.configuration.bakers;
         List<BaseConsumerI> bakerList = new ArrayList<>();
         int randomEfficiency = getRandomNumberFromRange(1, 10);
-        for (int i = 0; i < bakersConfiguration.quantity; i ++) {
+        for (int i = 0; i < bakersConfiguration.quantity; i++) {
             bakerList.add(new Baker(
-                randomEfficiency,
-                this.configuration.bakery.durationOfTheDayInSeconds,
-                this.queueLocator.waitingQueue(),
-                this.queueLocator.deliveryQueue(),
-                this.queueLocator.pendingWaitingQueue()
+                    randomEfficiency,
+                    this.configuration.bakery.durationOfTheDayInSeconds,
+                    this.queueLocator.waitingQueue(),
+                    this.queueLocator.deliveryQueue(),
+                    this.queueLocator.pendingWaitingQueue()
             ));
         }
         return bakerList;
@@ -48,14 +49,14 @@ public class Init {
         Deliverers deliverersConfiguration = this.configuration.deliverers;
         List<BaseConsumerI> delivererList = new ArrayList<>();
         int randomEfficiency = getRandomNumberFromRange(1, 10);
-        for (int i = 0; i < deliverersConfiguration.quantity; i ++) {
+        for (int i = 0; i < deliverersConfiguration.quantity; i++) {
             delivererList.add(new Deliverer(
-                deliverersConfiguration.capacity,
-                randomEfficiency,
-                this.configuration.bakery.durationOfTheDayInSeconds,
-                this.queueLocator.deliveryQueue(),
-                this.queueLocator.doneQueue(),
-                this.queueLocator.pendingDeliveryQueue()
+                    deliverersConfiguration.capacity,
+                    randomEfficiency,
+                    this.configuration.bakery.durationOfTheDayInSeconds,
+                    this.queueLocator.deliveryQueue(),
+                    this.queueLocator.doneQueue(),
+                    this.queueLocator.pendingDeliveryQueue()
             ));
         }
         return delivererList;
@@ -64,11 +65,11 @@ public class Init {
     public List<BaseConsumerI> initCustomers() {
         Customers customersConfiguration = this.configuration.customers;
         List<BaseConsumerI> costumersList = new ArrayList<>();
-        for (int i = 0; i < customersConfiguration.quantity; i ++) {
+        for (int i = 0; i < customersConfiguration.quantity; i++) {
             costumersList.add(new Customer(
-                customersConfiguration.quantityOfOrders,
-                this.configuration.bakery.durationOfTheDayInSeconds,
-                this.queueLocator.waitingQueue()
+                    customersConfiguration.quantityOfOrders,
+                    this.configuration.bakery.durationOfTheDayInSeconds,
+                    this.queueLocator.waitingQueue()
             ));
         }
         return costumersList;
@@ -86,17 +87,17 @@ public class Init {
         }
 
         return new QueueLocator(
-            new BaseQueue(
-                this.configuration.bakery.waitingQueueCapacity,
-                previousOrderToPrepare
-            ),
-            new BaseQueue(
-                this.configuration.bakery.deliveryQueueCapacity,
-                previousOrderToDeliver
-            ),
-            new UnlimitedQueue(),
-            new UnlimitedQueue(),
-            new UnlimitedQueue()
+                new BaseQueue(
+                        this.configuration.bakery.waitingQueueCapacity,
+                        previousOrderToPrepare
+                ),
+                new BaseQueue(
+                        this.configuration.bakery.deliveryQueueCapacity,
+                        previousOrderToDeliver
+                ),
+                new UnlimitedQueue(),
+                new UnlimitedQueue(),
+                new UnlimitedQueue()
         );
     }
 

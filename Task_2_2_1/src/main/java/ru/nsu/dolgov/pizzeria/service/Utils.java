@@ -6,13 +6,13 @@ import java.util.Random;
 import java.util.UUID;
 
 import static ru.nsu.dolgov.pizzeria.service.Utils.Colors.*;
-import static ru.nsu.dolgov.pizzeria.service.Utils.Colors.RESET;
 
 public class Utils {
     public static int getRandomNumberFromRange(int from, int to) {
         Random random = new Random();
         return random.nextInt((to - from) + 1) + from;
     }
+
     public static UUID getUUID() {
         return UUID.randomUUID();
     }
@@ -90,6 +90,7 @@ public class Utils {
         public static final String CYAN_BACKGROUND_BRIGHT = "\033[0;106m";  // CYAN
         public static final String WHITE_BACKGROUND_BRIGHT = "\033[0;107m";   // WHITE
     }
+
     public enum LogLevel {
         ERROR, INFO, WARNING
     }
@@ -105,21 +106,22 @@ public class Utils {
             case ERROR -> firstColorToken = RED;
             case WARNING -> firstColorToken = YELLOW;
         }
-        return  firstColorToken;
+        return firstColorToken;
     }
+
     public static void log(LogLevel level, String message) {
         System.out.printf(
-            "%s[%s][%s]%s %s%s%s\n",
-            YELLOW_BOLD_BRIGHT, getCurrentDate(), "SYSTEM", RESET,
-            getColorToken(level), message, RESET
+                "%s[%s][%s]%s %s%s%s\n",
+                YELLOW_BOLD_BRIGHT, getCurrentDate(), "SYSTEM", RESET,
+                getColorToken(level), message, RESET
         );
     }
 
     public static void log(LogLevel level, String message, String source) {
         System.out.printf(
-            "%s[%s][%s]%s %s%s%s\n",
-            YELLOW_BOLD_BRIGHT, getCurrentDate(), source.toUpperCase(), RESET,
-            getColorToken(level), message, RESET
+                "%s[%s][%s]%s %s%s%s\n",
+                YELLOW_BOLD_BRIGHT, getCurrentDate(), source.toUpperCase(), RESET,
+                getColorToken(level), message, RESET
         );
     }
 }

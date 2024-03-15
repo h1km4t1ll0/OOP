@@ -5,9 +5,6 @@ import ru.nsu.dolgov.pizzeria.service.init.FileAPI;
 import ru.nsu.dolgov.pizzeria.service.init.Init;
 import ru.nsu.dolgov.pizzeria.service.interfaces.BaseConsumerI;
 import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueueI;
-import ru.nsu.dolgov.pizzeria.service.interfaces.EmployeeI;
-import ru.nsu.dolgov.pizzeria.service.queues.BaseQueue;
-import ru.nsu.dolgov.pizzeria.service.queues.UnlimitedQueue;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -17,6 +14,9 @@ import java.util.concurrent.Future;
 
 import static ru.nsu.dolgov.pizzeria.service.Utils.log;
 
+/**
+ * Class to implement execution of a single bakery.
+ */
 public class Runner extends Thread {
     private final List<Future<?>> employeeFuture = new ArrayList<>();
     private List<BaseConsumerI> bakers;
@@ -33,6 +33,9 @@ public class Runner extends Thread {
         this.delay = delay;
     }
 
+    /**
+     * Method to init executors.
+     */
     private void initExecutors() {
         this.bakers = this.initializer.initBakers();
         this.deliverers = this.initializer.initDeliverers();
@@ -42,10 +45,16 @@ public class Runner extends Thread {
         this.customerExecutor = Executors.newFixedThreadPool(this.customers.size());
     }
 
+    /**
+     * Method to execute a bunch of tasks in a provided executor.
+     *
+     * @param consumers       list of consumers.
+     * @param executorService executor.
+     */
     private void runTask(List<BaseConsumerI> consumers, ExecutorService executorService) {
         for (BaseConsumerI consumer : consumers) {
             employeeFuture.add(executorService.submit(
-                consumer::consume
+                    consumer::consume
             ));
         }
     }
@@ -103,28 +112,28 @@ public class Runner extends Thread {
             sleep(this.delay);
         } catch (InterruptedException e) {
             log(
-                LogLevel.ERROR,
-                "Unexpected InterruptedException!",
-                "runner"
+                    LogLevel.ERROR,
+                    "Unexpected InterruptedException!",
+                    "runner"
             );
         }
         log(
-            LogLevel.INFO,
-            "Pizzeria is ended its' work. Waiting till all threads do the cleanup...",
-            "runner"
+                LogLevel.INFO,
+                "Pizzeria is ended its' work. Waiting till all threads do the cleanup...",
+                "runner"
         );
         this.shutdown();
         this.waitForCleanup();
         log(
-            LogLevel.INFO,
-            "All threads have done the cleanup. Waiting till th dump is complete...",
-            "runner"
+                LogLevel.INFO,
+                "All threads have done the cleanup. Waiting till th dump is complete...",
+                "runner"
         );
         this.createDumpOfOrders();
         log(
-            LogLevel.INFO,
-            "The dump is complete. Exiting.",
-            "runner"
+                LogLevel.INFO,
+                "The dump is complete. Exiting.",
+                "runner"
         );
     }
 }

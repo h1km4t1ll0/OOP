@@ -1,24 +1,18 @@
 {
   "deliverers": {
-    "quantity": 4,
+    "quantity": 2,
     "capacity": 2
   },
-  "warehouse": {
-    "capacity": 20
-  },
   "bakers": {
-    "quantity": 4
+    "quantity": 2
   },
   "customers": {
-    "quantity": 14,
+    "quantity": 40,
     "quantityOfOrders": 300
   },
   "bakery": {
     "durationOfTheDayInSeconds": 20,
     "deliveryQueueCapacity": 20,
     "waitingQueueCapacity": 20
-  },
-  "orders": {
-    "quantity": 100
   }
 }

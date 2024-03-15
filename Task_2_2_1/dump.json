@@ -1,1 +1,94 @@
-{}
+{
+  "waitingQueue": [
+    {
+      "id": "d14adb0a-ce49-4076-9a0d-45844b28cf8a",
+      "state": "WAITING"
+    },
+    {
+      "id": "f8e11cd7-bffe-4524-9daa-770d1bfce7d8",
+      "state": "WAITING"
+    },
+    {
+      "id": "1dd20c00-b39e-49c4-b4a1-4bcb82880bc6",
+      "state": "WAITING"
+    },
+    {
+      "id": "25589e50-2543-47bc-a42f-6f752e52f80a",
+      "state": "WAITING"
+    },
+    {
+      "id": "b6ac2f6d-4e0f-4346-bdbf-507496103dcb",
+      "state": "WAITING"
+    },
+    {
+      "id": "487ec352-6772-4d1c-8f9b-99ee8a8a9187",
+      "state": "WAITING"
+    },
+    {
+      "id": "127c3f0e-c0b7-40e6-91cd-e27e815f6f07",
+      "state": "WAITING"
+    },
+    {
+      "id": "b090e7a5-716e-41ea-ae66-cbaa6a0c6479",
+      "state": "WAITING"
+    },
+    {
+      "id": "2b24efcd-b385-4dbb-82c0-88729e3701bd",
+      "state": "WAITING"
+    },
+    {
+      "id": "4ff36498-704b-4256-a69c-bce9b633b878",
+      "state": "WAITING"
+    },
+    {
+      "id": "37febd2d-00d7-4e7c-a48d-1ca0fd682461",
+      "state": "WAITING"
+    },
+    {
+      "id": "0067085f-f9c4-4dee-a3cf-27df71cebc4e",
+      "state": "WAITING"
+    },
+    {
+      "id": "ceba20d9-d62f-4de4-9041-f9acb9be3683",
+      "state": "WAITING"
+    },
+    {
+      "id": "9f2bb5f7-6780-4518-a49e-68fc6044247d",
+      "state": "WAITING"
+    },
+    {
+      "id": "0a5e688f-6102-4e1e-9e69-78d3eaa0d447",
+      "state": "WAITING"
+    },
+    {
+      "id": "bd772fbf-e039-46e0-8fd5-ef6b7f9aa7bb",
+      "state": "WAITING"
+    },
+    {
+      "id": "abcf5e7f-e202-41c0-b7cf-a9bf56e9f370",
+      "state": "WAITING"
+    },
+    {
+      "id": "875c148c-04af-43f2-bd34-4cb0702a5e7b",
+      "state": "WAITING"
+    },
+    {
+      "id": "8fb9c098-318c-49f5-a4ad-3349213e1c5e",
+      "state": "PREPARING"
+    },
+    {
+      "id": "fee778e6-399b-4006-b952-39cfbc7608d1",
+      "state": "PREPARING"
+    }
+  ],
+  "pendingWaitingQueue": [
+    {
+      "id": "74b34e85-1621-43fa-b083-b1a7fc1695b1",
+      "state": "PREPARING"
+    },
+    {
+      "id": "436e5de9-5aca-414e-92cc-7e9a509b3edf",
+      "state": "PREPARING"
+    }
+  ]
+}

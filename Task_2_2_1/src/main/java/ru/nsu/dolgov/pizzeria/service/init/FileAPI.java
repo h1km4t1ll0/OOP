@@ -7,7 +7,8 @@ import ru.nsu.dolgov.pizzeria.service.entities.JSONEntites.Orders;
 import ru.nsu.dolgov.pizzeria.service.entities.pureentities.Order;
 
 import java.io.*;
-import java.util.*;
+import java.util.Deque;
+import java.util.Map;
 
 public class FileAPI {
     private final String filename;
@@ -30,7 +31,7 @@ public class FileAPI {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String jsonString = gson.toJson(payload);
         try (Writer writer = new FileWriter(this.filename)) {
-           writer.write(jsonString);
+            writer.write(jsonString);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,7 +40,7 @@ public class FileAPI {
     public synchronized Orders getPreviousOrders() {
         Gson gson = new Gson();
         try (Reader reader = new FileReader(this.filename)) {
-            return  gson.fromJson(reader, Orders.class);
+            return gson.fromJson(reader, Orders.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
