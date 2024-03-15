@@ -65,6 +65,7 @@ public class Deliverer extends Employee implements EmployeeI {
                 this.consumeOrder();
                 orders.forEach((order -> EmployeeI.changeStateOfOrder(order, OrderState.DONE)));
                 this.putOrders(orders);
+                orders.clear();
             }
         } catch (InterruptedException e) {
             this.dumpOrders(orders);

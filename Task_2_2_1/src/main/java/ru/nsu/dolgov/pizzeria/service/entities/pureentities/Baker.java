@@ -38,6 +38,7 @@ public class Baker extends Employee implements EmployeeI {
                 this.consumeOrder();
                 EmployeeI.changeStateOfOrder(order, OrderState.WAREHOUSE);
                 this.putOrder(order);
+                order = null;
             }
         } catch (InterruptedException e) {
             this.dumpOrder(order);
