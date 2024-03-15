@@ -84,18 +84,6 @@ public class Init {
         );
     }
 
-    public void createOrders() {
-        System.out.println(this.configuration.orders.quantity);
-        BlockingQueueI<Order> waitingQueue = this.queueLocator.waitingQueue();
-        for (int i = 0; i < this.configuration.orders.quantity; i++) {
-            try {
-                waitingQueue.put(new Order());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     public QueueLocator getQueueLocator() {
         return this.queueLocator;
     }

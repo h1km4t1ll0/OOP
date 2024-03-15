@@ -4,6 +4,7 @@ import ru.nsu.dolgov.pizzeria.service.Utils;
 import ru.nsu.dolgov.pizzeria.service.Utils.LogLevel;
 import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueueI;
 import ru.nsu.dolgov.pizzeria.service.interfaces.EmployeeI;
+import ru.nsu.dolgov.pizzeria.service.queues.UnlimitedQueue;
 
 import static ru.nsu.dolgov.pizzeria.service.Utils.Colors.BLUE;
 import static ru.nsu.dolgov.pizzeria.service.Utils.Colors.RESET;
@@ -15,7 +16,7 @@ public class Baker extends Employee implements EmployeeI {
             int dayDuration,
             BlockingQueueI<Order> sourceQueue,
             BlockingQueueI<Order> destinationQueue,
-            BlockingQueueI<Order> pendingSourceQueue
+            UnlimitedQueue pendingSourceQueue
     ) {
         super(
             efficiency,

@@ -3,6 +3,7 @@ package ru.nsu.dolgov.pizzeria.service.entities.pureentities;
 import ru.nsu.dolgov.pizzeria.service.Utils;
 import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueueI;
 import ru.nsu.dolgov.pizzeria.service.interfaces.EmployeeI;
+import ru.nsu.dolgov.pizzeria.service.queues.UnlimitedQueue;
 
 import java.util.UUID;
 
@@ -14,14 +15,14 @@ public abstract class Employee implements EmployeeI {
     public final UUID employeeUUID;
     private final BlockingQueueI<Order> sourceQueue;
     private final BlockingQueueI<Order> destinationQueue;
-    private final BlockingQueueI<Order> pendingSourceQueue;
+    private final UnlimitedQueue pendingSourceQueue;
 
     public Employee(
             int efficiency,
             int dayDuration,
             BlockingQueueI<Order> sourceQueue,
             BlockingQueueI<Order> destinationQueue,
-            BlockingQueueI<Order> pendingSourceQueue
+            UnlimitedQueue pendingSourceQueue
     ) {
         this.employeeUUID = getUUID();
         this.efficiency = efficiency;
@@ -47,11 +48,7 @@ public abstract class Employee implements EmployeeI {
     }
 
     public void putOrderBack(Order order) {
-        try {
-            this.pendingSourceQueue.put(order);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        this.pendingSourceQueue.put(order);
     }
 
     @Override
