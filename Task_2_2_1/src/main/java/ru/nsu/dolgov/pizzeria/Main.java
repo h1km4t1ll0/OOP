@@ -17,20 +17,6 @@ public class Main {
         Init initializer = new Init("config.json");
         Runner runner = new Runner(initializer, 10000L);
         runner.start();
-
-        BaseQueue waitingQueue = initializer.getQueueLocator().waitingQueue();
-        BaseQueue deliveryQueue = initializer.getQueueLocator().deliveryQueue();
-        System.out.println(waitingQueue.getCapacity());
-        initializer.createOrders();
-        for (int i = 0; i < 10; i ++) {
-            try {
-                waitingQueue.put(new Order());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
         runner.join();
-        System.out.println("srfjisrefiefjrs");
-        System.out.println("srfjisrefiefjrs");
     }
 }
