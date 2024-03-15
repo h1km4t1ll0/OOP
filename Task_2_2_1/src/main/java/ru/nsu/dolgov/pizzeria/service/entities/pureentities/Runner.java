@@ -39,7 +39,7 @@ public class Runner extends Thread {
         this.customers = this.initializer.initCustomers();
         this.bakerExecutor = Executors.newFixedThreadPool(this.bakers.size());
         this.delivererExecutor = Executors.newFixedThreadPool(this.deliverers.size());
-        this.customerExecutor = Executors.newFixedThreadPool(this.deliverers.size());
+        this.customerExecutor = Executors.newFixedThreadPool(this.customers.size());
     }
 
     private void runTask(List<BaseConsumerI> consumers, ExecutorService executorService) {
