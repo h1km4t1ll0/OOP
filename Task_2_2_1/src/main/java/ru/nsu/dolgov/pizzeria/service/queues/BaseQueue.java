@@ -1,12 +1,12 @@
 package ru.nsu.dolgov.pizzeria.service.queues;
 
 import ru.nsu.dolgov.pizzeria.service.entities.pureentities.Order;
-import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueue;
+import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueueI;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class BaseQueue implements BlockingQueue<Order> {
+public class BaseQueue implements BlockingQueueI<Order> {
     private final int capacity;
     private final Deque<Order> orders;
 
