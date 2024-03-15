@@ -80,9 +80,9 @@ public class Init {
             previousOrderToPrepare.addAll(this.previousOrders.pendingWaitingQueue);
         }
 
-        Deque<Order> previousOrderToDeliver = this.previousOrders.waitingQueue;
+        Deque<Order> previousOrderToDeliver = this.previousOrders.deliveryQueue;
         if (previousOrderToDeliver != null) {
-            previousOrderToDeliver.addAll(this.previousOrders.pendingWaitingQueue);
+            previousOrderToDeliver.addAll(this.previousOrders.pendingDeliveryQueue);
         }
 
         return new QueueLocator(
