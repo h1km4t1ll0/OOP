@@ -93,18 +93,33 @@ public class Utils {
     public enum LogLevel {
         ERROR, INFO, WARNING
     }
-    public static void log(LogLevel level, String message) {
-        String currentTime = new SimpleDateFormat("HH:mm:ss.SSS").format(new Date());
+
+    private static String getCurrentDate() {
+        return new SimpleDateFormat("HH:mm:ss.SSS").format(new Date());
+    }
+
+    private static String getColorToken(LogLevel level) {
         String firstColorToken = RED;
         switch (level) {
             case INFO -> firstColorToken = BLUE;
             case ERROR -> firstColorToken = RED;
             case WARNING -> firstColorToken = YELLOW;
         }
+        return  firstColorToken;
+    }
+    public static void log(LogLevel level, String message) {
         System.out.printf(
-            "%s[%s]%s %s%s%s\n",
-            YELLOW_BOLD_BRIGHT, currentTime, RESET,
-            firstColorToken, message, RESET
+            "%s[%s][%s]%s %s%s%s\n",
+            YELLOW_BOLD_BRIGHT, getCurrentDate(), "SYSTEM", RESET,
+            getColorToken(level), message, RESET
+        );
+    }
+
+    public static void log(LogLevel level, String message, String source) {
+        System.out.printf(
+            "%s[%s][%s]%s %s%s%s\n",
+            YELLOW_BOLD_BRIGHT, getCurrentDate(), source.toUpperCase(), RESET,
+            getColorToken(level), message, RESET
         );
     }
 }
