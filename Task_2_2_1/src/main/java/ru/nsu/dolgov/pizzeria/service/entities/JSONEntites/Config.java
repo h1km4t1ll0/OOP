@@ -6,4 +6,5 @@ public class Config {
     public Bakers bakers;
     public Bakery bakery;
     public Orders orders;
+    public Customers customers;
 }

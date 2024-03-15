@@ -9,6 +9,10 @@
   "bakers": {
     "quantity": 1
   },
+  "customers": {
+    "quantity": 1,
+    "quantityOfOrders": 10
+  },
   "bakery": {
     "durationOfTheDayInSeconds": 10,
     "deliveryQueueCapacity": 20,
