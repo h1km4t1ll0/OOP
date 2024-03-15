@@ -10,9 +10,14 @@ public class BaseQueue implements BlockingQueueI<Order> {
     private final int capacity;
     private final Deque<Order> orders;
 
-    public BaseQueue(int capacity) {
+    public BaseQueue(int capacity, Deque<Order> initial) {
         this.capacity = capacity;
-        this.orders = new ArrayDeque<>();
+
+        if (initial == null) {
+            this.orders = new ArrayDeque<>();
+        } else {
+            this.orders = initial;
+        }
     }
 
     @Override
