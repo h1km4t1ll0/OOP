@@ -1,7 +1,9 @@
 package ru.nsu.dolgov.pizzeria.service.entities.pureentities;
 
+import ru.nsu.dolgov.pizzeria.service.Utils.LogLevel;
 import ru.nsu.dolgov.pizzeria.service.init.Init;
-import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueue;
+import ru.nsu.dolgov.pizzeria.service.interfaces.BaseConsumerI;
+import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueueI;
 import ru.nsu.dolgov.pizzeria.service.interfaces.EmployeeI;
 
 import java.util.*;
@@ -10,12 +12,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import static ru.nsu.dolgov.pizzeria.service.Utils.log;
+
 public class Runner extends Thread {
     private final List<Future<?>> employeeFuture = new ArrayList<>();
-    private List<EmployeeI> bakers;
-    private List<EmployeeI> deliverers;
+    private List<BaseConsumerI> bakers;
+    private List<BaseConsumerI> deliverers;
+    private List<BaseConsumerI> customers;
     private ExecutorService bakerExecutor;
     private ExecutorService delivererExecutor;
+    private ExecutorService customerExecutor;
     private final Init initializer;
     private final long delay;
 
@@ -27,14 +33,16 @@ public class Runner extends Thread {
     private void initExecutors() {
         this.bakers = this.initializer.initBakers();
         this.deliverers = this.initializer.initDeliverers();
+        this.customers = this.initializer.initCustomers();
         this.bakerExecutor = Executors.newFixedThreadPool(this.bakers.size());
         this.delivererExecutor = Executors.newFixedThreadPool(this.deliverers.size());
+        this.customerExecutor = Executors.newFixedThreadPool(this.deliverers.size());
     }
 
-    private void runTask(List<EmployeeI> employees, ExecutorService executorService) {
-        for (EmployeeI employee : employees) {
+    private void runTask(List<BaseConsumerI> consumers, ExecutorService executorService) {
+        for (BaseConsumerI consumer : consumers) {
             employeeFuture.add(executorService.submit(
-                    employee::consume
+                consumer::consume
             ));
         }
     }
@@ -43,6 +51,23 @@ public class Runner extends Thread {
         this.initExecutors();
         this.runTask(this.bakers, this.bakerExecutor);
         this.runTask(this.deliverers, this.delivererExecutor);
+        this.runTask(this.customers, this.customerExecutor);
+    }
+
+    private void shutdown() {
+        this.delivererExecutor.shutdownNow();
+        this.bakerExecutor.shutdownNow();
+        this.customerExecutor.shutdownNow();
+    }
+
+    private void waitForCleanup() {
+        for (Future<?> employeeFuture : this.employeeFuture) {
+            try {
+                employeeFuture.get();
+            } catch (InterruptedException | ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override
@@ -51,32 +76,33 @@ public class Runner extends Thread {
         try {
             sleep(this.delay);
         } catch (InterruptedException e) {
-            System.out.println("Unexpected interruption at runner!");
+            log(
+                LogLevel.ERROR,
+                "Unexpected InterruptedException!",
+                "runner"
+            );
         }
-        System.out.println("STOP!!!");
-
-        this.delivererExecutor.shutdownNow();
-        this.bakerExecutor.shutdownNow();
-
-        for (Future<?> employeeFuture : this.employeeFuture) {
-            try {
-                employeeFuture.get();
-            } catch (InterruptedException | ExecutionException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.println(employeeFuture.isDone());
-        }
-
-
-        BlockingQueue<Order> waitingQueue = this.initializer.getQueueLocator().waitingQueue();
-        BlockingQueue<Order> deliveryQueue = this.initializer.getQueueLocator().deliveryQueue();
-        BlockingQueue<Order> doneQueue = this.initializer.getQueueLocator().doneQueue();
-        BlockingQueue<Order> pendingWaitingQueue = initializer.getQueueLocator().pendingWaitingQueue();
-        BlockingQueue<Order> pendingDeliveryQueue = this.initializer.getQueueLocator().pendingDeliveryQueue();
-        System.out.println(waitingQueue.getDump());
-        System.out.println(deliveryQueue.getDump());
-        System.out.println(pendingWaitingQueue.getDump());
-        System.out.println(pendingDeliveryQueue.getDump());
-        System.out.println(doneQueue.getDump());
+        log(
+            LogLevel.INFO,
+            "Pizzeria is ended its' work. Waiting till all threads do the cleanup...",
+            "runner"
+        );
+        this.shutdown();
+        this.waitForCleanup();
+        log(
+            LogLevel.INFO,
+            "All threads have done the cleanup. Exiting.",
+            "runner"
+        );
+        BlockingQueueI<Order> waitingQueue = this.initializer.getQueueLocator().waitingQueue();
+        BlockingQueueI<Order> deliveryQueue = this.initializer.getQueueLocator().deliveryQueue();
+        BlockingQueueI<Order> doneQueue = this.initializer.getQueueLocator().doneQueue();
+        BlockingQueueI<Order> pendingWaitingQueue = initializer.getQueueLocator().pendingWaitingQueue();
+        BlockingQueueI<Order> pendingDeliveryQueue = this.initializer.getQueueLocator().pendingDeliveryQueue();
+        System.out.println(waitingQueue.getDump().size());
+        System.out.println(deliveryQueue.getDump().size());
+        System.out.println(pendingWaitingQueue.getDump().size());
+        System.out.println(pendingDeliveryQueue.getDump().size());
+        System.out.println(doneQueue.getDump().size());
     }
 }

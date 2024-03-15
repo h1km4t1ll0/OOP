@@ -1,12 +1,15 @@
 package ru.nsu.dolgov.pizzeria.service.init;
 
+import ru.nsu.dolgov.pizzeria.service.entities.JSONEntites.Customers;
 import ru.nsu.dolgov.pizzeria.service.entities.pureentities.Baker;
+import ru.nsu.dolgov.pizzeria.service.entities.pureentities.Customer;
 import ru.nsu.dolgov.pizzeria.service.entities.pureentities.Deliverer;
 import ru.nsu.dolgov.pizzeria.service.entities.JSONEntites.Bakers;
 import ru.nsu.dolgov.pizzeria.service.entities.JSONEntites.Config;
 import ru.nsu.dolgov.pizzeria.service.entities.JSONEntites.Deliverers;
 import ru.nsu.dolgov.pizzeria.service.entities.pureentities.Order;
-import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueue;
+import ru.nsu.dolgov.pizzeria.service.interfaces.BaseConsumerI;
+import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueueI;
 import ru.nsu.dolgov.pizzeria.service.interfaces.EmployeeI;
 import ru.nsu.dolgov.pizzeria.service.queues.BaseQueue;
 import ru.nsu.dolgov.pizzeria.service.queues.QueueLocator;
@@ -25,9 +28,9 @@ public class Init {
         this.queueLocator = this.declareQueues();
     }
 
-    public List<EmployeeI> initBakers() {
+    public List<BaseConsumerI> initBakers() {
         Bakers bakersConfiguration = this.configuration.bakers;
-        List<EmployeeI> bakerList = new ArrayList<>();
+        List<BaseConsumerI> bakerList = new ArrayList<>();
         int randomEfficiency = getRandomNumberFromRange(1, 10);
         for (int i = 0; i < bakersConfiguration.quantity; i ++) {
             bakerList.add(new Baker(
@@ -41,9 +44,9 @@ public class Init {
         return bakerList;
     }
 
-    public List<EmployeeI> initDeliverers() {
+    public List<BaseConsumerI> initDeliverers() {
         Deliverers deliverersConfiguration = this.configuration.deliverers;
-        List<EmployeeI> delivererList = new ArrayList<>();
+        List<BaseConsumerI> delivererList = new ArrayList<>();
         int randomEfficiency = getRandomNumberFromRange(1, 10);
         for (int i = 0; i < deliverersConfiguration.quantity; i ++) {
             delivererList.add(new Deliverer(
@@ -58,6 +61,19 @@ public class Init {
         return delivererList;
     }
 
+    public List<BaseConsumerI> initCustomers() {
+        Customers customersConfiguration = this.configuration.customers;
+        List<BaseConsumerI> costumersList = new ArrayList<>();
+        for (int i = 0; i < customersConfiguration.quantity; i ++) {
+            costumersList.add(new Customer(
+                customersConfiguration.quantityOfOrders,
+                this.configuration.bakery.durationOfTheDayInSeconds,
+                this.queueLocator.waitingQueue()
+            ));
+        }
+        return costumersList;
+    }
+
     private QueueLocator declareQueues() {
         return new QueueLocator(
             new BaseQueue(this.configuration.bakery.waitingQueueCapacity),
@@ -70,7 +86,7 @@ public class Init {
 
     public void createOrders() {
         System.out.println(this.configuration.orders.quantity);
-        BlockingQueue<Order> waitingQueue = this.queueLocator.waitingQueue();
+        BlockingQueueI<Order> waitingQueue = this.queueLocator.waitingQueue();
         for (int i = 0; i < this.configuration.orders.quantity; i++) {
             try {
                 waitingQueue.put(new Order());

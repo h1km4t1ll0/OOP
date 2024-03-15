@@ -1,7 +1,7 @@
 package ru.nsu.dolgov.pizzeria.service.entities.pureentities;
 
 import ru.nsu.dolgov.pizzeria.service.Utils;
-import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueue;
+import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueueI;
 import ru.nsu.dolgov.pizzeria.service.interfaces.EmployeeI;
 
 import java.util.UUID;
@@ -12,16 +12,16 @@ public abstract class Employee implements EmployeeI {
     private final int efficiency;
     private final int dayDuration;
     public final UUID employeeUUID;
-    private final BlockingQueue<Order> sourceQueue;
-    private final BlockingQueue<Order> destinationQueue;
-    private final BlockingQueue<Order> pendingSourceQueue;
+    private final BlockingQueueI<Order> sourceQueue;
+    private final BlockingQueueI<Order> destinationQueue;
+    private final BlockingQueueI<Order> pendingSourceQueue;
 
     public Employee(
             int efficiency,
             int dayDuration,
-            BlockingQueue<Order> sourceQueue,
-            BlockingQueue<Order> destinationQueue,
-            BlockingQueue<Order> pendingSourceQueue
+            BlockingQueueI<Order> sourceQueue,
+            BlockingQueueI<Order> destinationQueue,
+            BlockingQueueI<Order> pendingSourceQueue
     ) {
         this.employeeUUID = getUUID();
         this.efficiency = efficiency;

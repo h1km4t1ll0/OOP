@@ -11,11 +11,9 @@ import java.util.UUID;
 import static ru.nsu.dolgov.pizzeria.service.Utils.Colors.*;
 import static ru.nsu.dolgov.pizzeria.service.Utils.Colors.RESET;
 
-public interface EmployeeI {
+public interface EmployeeI extends BaseConsumerI{
     UUID getEmployeeUUID();
     Order getOrder() throws InterruptedException;
-    void putOrder(Order order) throws InterruptedException;
-    void consume();
     static void changeStateOfOrder(@NotNull Order order, @NotNull OrderState newState) {
         String currentTime = new SimpleDateFormat("HH:mm:ss.SSS").format(new Date());
         System.out.printf(

@@ -1,18 +1,21 @@
 package ru.nsu.dolgov.pizzeria.service.entities.pureentities;
 
-import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueue;
+import ru.nsu.dolgov.pizzeria.service.Utils;
+import ru.nsu.dolgov.pizzeria.service.Utils.LogLevel;
+import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueueI;
 import ru.nsu.dolgov.pizzeria.service.interfaces.EmployeeI;
 
 import static ru.nsu.dolgov.pizzeria.service.Utils.Colors.BLUE;
 import static ru.nsu.dolgov.pizzeria.service.Utils.Colors.RESET;
+import static ru.nsu.dolgov.pizzeria.service.Utils.log;
 
 public class Baker extends Employee implements EmployeeI {
     public Baker(
             int efficiency,
             int dayDuration,
-            BlockingQueue<Order> sourceQueue,
-            BlockingQueue<Order> destinationQueue,
-            BlockingQueue<Order> pendingSourceQueue
+            BlockingQueueI<Order> sourceQueue,
+            BlockingQueueI<Order> destinationQueue,
+            BlockingQueueI<Order> pendingSourceQueue
     ) {
         super(
             efficiency,
@@ -25,7 +28,10 @@ public class Baker extends Employee implements EmployeeI {
 
     @Override
     public void consume() {
-        System.out.printf("Baker with id %s%s%s is ready to consume!\n", BLUE, this.getEmployeeUUID().toString(), RESET);
+        log(
+            LogLevel.INFO,
+            "Baker with id " + this.getEmployeeUUID() + " is ready to consume."
+        );
         Order order = null;
         try {
             while (true) {
@@ -38,5 +44,9 @@ public class Baker extends Employee implements EmployeeI {
         } catch (InterruptedException e) {
             this.putOrderBack(order);
         }
+        log(
+            LogLevel.INFO,
+            "Baker with id " + this.getEmployeeUUID() + " ended up its' work."
+        );
     }
 }

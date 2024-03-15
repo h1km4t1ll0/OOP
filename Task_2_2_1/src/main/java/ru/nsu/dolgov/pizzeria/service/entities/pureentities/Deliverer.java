@@ -1,6 +1,8 @@
 package ru.nsu.dolgov.pizzeria.service.entities.pureentities;
 
-import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueue;
+import ru.nsu.dolgov.pizzeria.service.Utils;
+import ru.nsu.dolgov.pizzeria.service.Utils.LogLevel;
+import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueueI;
 import ru.nsu.dolgov.pizzeria.service.interfaces.EmployeeI;
 
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.List;
 
 import static ru.nsu.dolgov.pizzeria.service.Utils.Colors.BLUE;
 import static ru.nsu.dolgov.pizzeria.service.Utils.Colors.RESET;
+import static ru.nsu.dolgov.pizzeria.service.Utils.log;
 
 public class Deliverer extends Employee implements EmployeeI {
     private final int capacity;
@@ -16,9 +19,9 @@ public class Deliverer extends Employee implements EmployeeI {
             int capacity,
             int efficiency,
             int dayDuration,
-            BlockingQueue<Order> sourceQueue,
-            BlockingQueue<Order> destinationQueue,
-            BlockingQueue<Order> pendingSourceQueue
+            BlockingQueueI<Order> sourceQueue,
+            BlockingQueueI<Order> destinationQueue,
+            BlockingQueueI<Order> pendingSourceQueue
     ) {
         super(
             efficiency,
@@ -52,7 +55,10 @@ public class Deliverer extends Employee implements EmployeeI {
 
     @Override
     public void consume() {
-        System.out.printf("Deliverer with id %s%s%s is ready to consume!\n", BLUE, this.employeeUUID.toString(), RESET);
+        log(
+            LogLevel.INFO,
+            "Deliverer with id " + this.getEmployeeUUID() + " is ready to consume."
+        );
         List<Order> orders = new ArrayList<>();
         try {
             while (true) {
@@ -65,6 +71,9 @@ public class Deliverer extends Employee implements EmployeeI {
         } catch (InterruptedException e) {
             this.dumpOrders(orders);
         }
-        this.dumpOrders(orders);
+        log(
+            LogLevel.INFO,
+            "Deliverer with id " + this.getEmployeeUUID() + " ended up its' work."
+        );
     }
 }
