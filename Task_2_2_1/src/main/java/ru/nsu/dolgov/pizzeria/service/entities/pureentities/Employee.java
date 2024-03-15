@@ -47,8 +47,10 @@ public abstract class Employee implements EmployeeI {
         this.destinationQueue.put(order);
     }
 
-    public void putOrderBack(Order order) {
-        this.pendingSourceQueue.put(order);
+    public void dumpOrder(Order order) {
+        if (order != null) {
+            this.pendingSourceQueue.put(order);
+        }
     }
 
     @Override

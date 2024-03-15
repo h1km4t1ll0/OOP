@@ -1,15 +1,13 @@
 package ru.nsu.dolgov.pizzeria.service.entities.pureentities;
 
-import ru.nsu.dolgov.pizzeria.service.Utils;
 import ru.nsu.dolgov.pizzeria.service.Utils.LogLevel;
 import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueueI;
 import ru.nsu.dolgov.pizzeria.service.interfaces.EmployeeI;
+import ru.nsu.dolgov.pizzeria.service.queues.UnlimitedQueue;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.nsu.dolgov.pizzeria.service.Utils.Colors.BLUE;
-import static ru.nsu.dolgov.pizzeria.service.Utils.Colors.RESET;
 import static ru.nsu.dolgov.pizzeria.service.Utils.log;
 
 public class Deliverer extends Employee implements EmployeeI {
@@ -21,7 +19,7 @@ public class Deliverer extends Employee implements EmployeeI {
             int dayDuration,
             BlockingQueueI<Order> sourceQueue,
             BlockingQueueI<Order> destinationQueue,
-            BlockingQueueI<Order> pendingSourceQueue
+            UnlimitedQueue pendingSourceQueue
     ) {
         super(
             efficiency,
@@ -40,7 +38,7 @@ public class Deliverer extends Employee implements EmployeeI {
     }
 
     private void dumpOrders(List<Order> orders) {
-        orders.forEach(this::putOrderBack);
+        orders.forEach(this::dumpOrder);
     }
 
     private List<Order> getOrders(int quantity) throws InterruptedException {

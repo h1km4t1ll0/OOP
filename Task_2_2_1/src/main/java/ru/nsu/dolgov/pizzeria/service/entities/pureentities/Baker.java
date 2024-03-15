@@ -1,13 +1,10 @@
 package ru.nsu.dolgov.pizzeria.service.entities.pureentities;
 
-import ru.nsu.dolgov.pizzeria.service.Utils;
 import ru.nsu.dolgov.pizzeria.service.Utils.LogLevel;
 import ru.nsu.dolgov.pizzeria.service.interfaces.BlockingQueueI;
 import ru.nsu.dolgov.pizzeria.service.interfaces.EmployeeI;
 import ru.nsu.dolgov.pizzeria.service.queues.UnlimitedQueue;
 
-import static ru.nsu.dolgov.pizzeria.service.Utils.Colors.BLUE;
-import static ru.nsu.dolgov.pizzeria.service.Utils.Colors.RESET;
 import static ru.nsu.dolgov.pizzeria.service.Utils.log;
 
 public class Baker extends Employee implements EmployeeI {
@@ -43,7 +40,7 @@ public class Baker extends Employee implements EmployeeI {
                 this.putOrder(order);
             }
         } catch (InterruptedException e) {
-            this.putOrderBack(order);
+            this.dumpOrder(order);
         }
         log(
             LogLevel.INFO,

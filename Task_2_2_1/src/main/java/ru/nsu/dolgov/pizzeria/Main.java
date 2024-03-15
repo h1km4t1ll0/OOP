@@ -15,7 +15,10 @@ import java.util.concurrent.*;
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         Init initializer = new Init("config.json");
-        Runner runner = new Runner(initializer, 10000L);
+        Runner runner = new Runner(
+            initializer,
+            initializer.getConfiguration().bakery.durationOfTheDayInSeconds * 1000L
+        );
         runner.start();
         runner.join();
     }
